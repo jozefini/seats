@@ -41,7 +41,7 @@ export function Selected({ data }) {
 
 	return (
 		<div className={css.wrapper}>
-			<h2 className={css.title}>Selected seats {!!totalPrice && `($${totalPrice})`}</h2>
+			<h2 className={css.title}>Selected seats {!!totalPrice && `( $${totalPrice} )`}</h2>
 			<div className={css.rows}>
 				{reserved.map(([rowName, cols], i) => (
 					<div className={css.row} key={i}>
