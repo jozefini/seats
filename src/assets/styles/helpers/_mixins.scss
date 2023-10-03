@@ -1,0 +1,5 @@
+@mixin each-nth-child($index) {
+  &:nth-child(#{$index}n) {
+    @content;
+  }
+}

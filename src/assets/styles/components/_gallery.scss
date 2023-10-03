@@ -1,0 +1,15 @@
+@import '../helpers';
+
+.release-gallery {
+  --swiper-pagination-bottom: 1rem;
+  --swiper-pagination-bullet-horizontal-gap: 0.25rem;
+  --swiper-pagination-bullet-width: 0.5rem;
+  --swiper-pagination-bullet-height: 0.5rem;
+
+  .swiper-pagination-bullet {
+    background: #8e8e93;
+  }
+  .swiper-pagination-bullet-active {
+    background: #fff;
+  }
+}

@@ -1,0 +1,29 @@
+@import '../helpers';
+
+.modern-scrollbar {
+  scrollbar-color: #d6dddf transparent;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    height: 0.3125rem; // 5px
+    width: 0.3125rem; // 5px
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d6dddf;
+    border-radius: 0.1875rem; // 3px
+  }
+}
+
+.fix-blend-text {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dir-ltr {
+  direction: ltr;
+}
+
+.dir-rtl {
+  direction: rtl;
+}

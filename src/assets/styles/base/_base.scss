@@ -1,0 +1,73 @@
+@import '../helpers';
+
+html {
+	background: $clr-white;
+	color: $clr-black;
+	scroll-behavior: smooth;
+
+	-webkit-text-size-adjust: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	position: relative;
+	max-width: 100vw;
+	min-height: 100%;
+	min-width: 280px; // Samsung fold!?
+
+	direction: inherit;
+	overflow-x: hidden;
+
+	font: normal 400 1rem/1.4 $font-family-primary;
+
+	word-break: break-word;
+	scroll-behavior: smooth;
+}
+
+// Desktop version is designed on a large screen of 1920px.
+// For smaller screens, we scale down overall design to fit
+// any screen size down to 992px, which is the breakpoint
+// between mobile and desktop.
+@media (min-width: #{$design-breakpoint}px) and (max-width: #{$figma-desktop-width}px) {
+	html {
+		font-size: unquote(
+			'min(16px,max(#{$min-desktop-font-size},calc(100vw / #{$figma-desktop-width} * 16)))'
+		);
+	}
+}
+
+// Mobile version is designed on a screen of 375px.
+// For smaller screens, we scale down overall design
+// based on 375px screen sizes provided by the designer.
+@media (max-width: #{$figma-mobile-width - 1}px) {
+	html {
+		font-size: unquote(
+			'min(16px,max(#{$min-mobile-font-size},calc(100vw / #{$figma-mobile-width} * 16)))'
+		);
+	}
+}
+
+// Mobile version is designed on a screen of 375px.
+// For larger screens up to 992px (desktop breakpoint),
+// we scale up overall design at a certain size that
+// it makes mobile design look good.
+@media (min-width: #{$figma-mobile-width}px) and (max-width: #{$design-breakpoint - 1}px) {
+	html {
+		font-size: unquote(
+			'max(16px,min(#{$max-mobile-font-size},calc(100vw / #{$figma-mobile-width} * 16)))'
+		);
+	}
+}
+
+#headlessui-portal-root,
+[data-radix-popper-content-wrapper] {
+	position: relative;
+	z-index: 100 !important;
+}
+
+input.no-autofill:-webkit-autofill,
+input.no-autofill:-webkit-autofill:hover,
+input.no-autofill:-webkit-autofill:focus {
+	transition: background-color 5000s ease-in-out 0s;
+}

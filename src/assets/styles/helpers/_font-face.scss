@@ -1,0 +1,20 @@
+@mixin fontFace($file-name, $font-name: $file-name, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: quote($font-name);
+    src: url('../fonts/' + $file-name + '.woff2') format('woff2'),
+      url('../fonts/' + $file-name + '.woff') format('woff');
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+  }
+}
+
+@mixin fontFaceVariable($file-name, $font-name: $file-name) {
+  @font-face {
+    font-family: quote($font-name);
+    src: url('../fonts/' + $file-name + '.woff2') format('woff2 supports variations'),
+      url('../fonts/' + $file-name + '.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+}

@@ -1,0 +1,47 @@
+@use 'sass:map';
+
+// ----------------------------------------------
+// Breakpoints
+// ----------------------------------------------
+
+$figma-desktop-width: 1920; // Styleguide for desktop.
+$figma-mobile-width: 375; // Styleguide for mobile.
+$design-breakpoint: 992; // Breakpoint where the mobile design changes to desktop.
+
+// ----------------------------------------------
+// Colors
+// ----------------------------------------------
+
+$clr-black: #000;
+$clr-white: #fff;
+
+$clr-input-border: #d0d5dd;
+$clr-input-focused-border: #828282;
+$clr-input-placeholder: rgba(#0f0f0f, 0.4);
+
+// ----------------------------------------------
+// Heights
+// ----------------------------------------------
+
+$height-input: 1.875rem; // 30px
+$height-textarea: 12.5rem; // 200px
+
+// ----------------------------------------------
+// Typography
+// ----------------------------------------------
+
+$font-family-primary: sans-serif;
+
+// Setting min and max font sizes will prevent scaling up and down too much.
+// For example, we don't want mobile version to scale up to 992px breakpoint
+// as it will make the design look too big.
+// We also don't want desktop version to scale down to 992px breakpoint
+// as it will make the design look too small and unreadable.
+$max-mobile-font-size: 24px;
+$min-mobile-font-size: 9px;
+$min-desktop-font-size: 9px;
+// No need to set a max font size for desktop as we won't scale any up from 1920px.
+
+// ----------------------------------------------
+// Z-Index
+// ----------------------------------------------

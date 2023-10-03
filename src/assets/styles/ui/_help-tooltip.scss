@@ -1,0 +1,68 @@
+@import '../helpers';
+
+%hidden-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.15s ease-in-out;
+}
+
+%visible-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.ui-help {
+  $root: &;
+
+  &__btn {
+    height: 1.125rem; // 18px
+    width: 1.125rem; // 18px
+
+    &--small {
+      height: 0.9375rem; // 15px
+      width: 0.9375rem; // 15px
+    }
+  }
+
+  &__icon {
+    width: inherit;
+    height: inherit;
+  }
+
+  &:hover > #{$root}__btn--invert,
+  &__btn--invert:hover,
+  &__btn--invert:focus {
+    opacity: 1;
+    background-color: #000;
+    box-shadow: 0 0 0 0.1875rem #000; // 3px
+
+    #{$root}__icon {
+      filter: invert(1);
+    }
+  }
+
+  &:hover > #{$root}__btn,
+  &__btn:hover,
+  &__btn:focus {
+    ~ #{$root}__tooltip {
+      @extend %visible-tooltip;
+    }
+  }
+
+  &__tooltip {
+    @extend %hidden-tooltip;
+
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+    width: 15.625rem; // 250px
+    margin-bottom: 0.5625rem; // 9px
+
+    border-radius: 0.9375rem; // 15px
+
+    background: #fff;
+    color: #000;
+
+    box-shadow: 0 0.625rem 1.5625rem rgba(0, 0, 0, 0.15); // 0 10px 25px
+  }
+}

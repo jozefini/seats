@@ -1,0 +1,51 @@
+@import '../helpers';
+
+%button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 2.5rem; // 40px
+  padding: 0 1.875rem; // 30px
+  border-radius: 3.125rem; // 50px
+
+  font-weight: 500;
+  font-size: 1.375rem; // 22px
+  line-height: 1.45; // 32px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.1s ease-in;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.ui-primary-btn {
+  @extend %button;
+
+  background-color: $clr-black;
+  color: $clr-white;
+
+  transition: opacity 0.2s ease-in;
+
+  &:hover,
+  &:focus {
+    opacity: 0.75;
+  }
+
+  &--disabled,
+  &[disabled] {
+    pointer-events: none;
+    background-color: #e0e0e0;
+  }
+}
+
+.ui-outlined-btn {
+  @extend %button;
+
+  background-color: transparent;
+  color: $clr-black;
+  border: 2px solid $clr-black;
+}
