@@ -2,7 +2,6 @@
 import { defineConfig } from 'vite'
 import path from 'path'
 import react from '@vitejs/plugin-react'
-import { svgBuilder } from 'vite-svg-plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,5 +19,5 @@ export default defineConfig({
 			'@utils': path.resolve(__dirname, './src/utils'),
 		},
 	},
-	plugins: [svgBuilder({ path: 'src/assets/icons/', prefix: 'icon' }), react()], // , basicSsl()
+	plugins: [react()], // , basicSsl()
 })
