@@ -2,7 +2,7 @@ import { useSelection } from '../hooks/selection'
 
 const css = {
 	wrapper: 'h-full w-full px-8 py-6',
-	box: 'h-full w-full bg-gray-100 flex items-center justify-center text-2xl text-black',
+	box: 'h-full w-full flex items-center justify-center text-2xl text-black border rounded-md bg-gray-50',
 	selection: 'border border-blue-500 bg-blue-200 opacity-50 fixed',
 }
 
