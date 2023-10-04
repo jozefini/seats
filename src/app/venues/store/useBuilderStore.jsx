@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
 import { CURSOR_TYPES, SELECTION_TYPES } from '../utils/contants'
+import { getType } from '../utils/helpers'
 
 const ACTIONS = {
 	ADD_ROW: 'ADD_ROW',
@@ -22,6 +23,10 @@ const initialStates = {
 	selectedSeats: [],
 	selectedRow: null,
 	selectedRows: [],
+	startMouseY: 0,
+	startMouseX: 0,
+	endMouseY: 0,
+	endMouseX: 0,
 
 	// History.
 	history: [],
@@ -99,6 +104,23 @@ const builderStore = create(
 			})
 		},
 		redoChanges: () => {},
+		updateStates: (states) =>
+			set((draft) => {
+				// If the states are not an object, do nothing.
+				if (getType(states) !== 'object') {
+					return false
+				}
+
+				// Filter all the states that are not in the initial states.
+				const filteredStates = Object.keys(states).filter((key) =>
+					initialStates.hasOwnProperty(key),
+				)
+
+				// Update the states.
+				filteredStates.forEach((key) => {
+					draft[key] = states[key]
+				})
+			}),
 		resetStore: () => set({ ...initialStates }),
 	})),
 )
