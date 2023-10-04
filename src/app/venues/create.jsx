@@ -1,8 +1,8 @@
-import { DictionaryProvider } from './context/dictionary'
+import { VenueProvider } from './context/venue'
 import { Editor } from './editor'
 import { Sidebar } from './sidebar'
 import { Topbar } from './topbar'
-import builderI18n from './i18n/builder.json'
+import dictionary from './i18n/create.json'
 
 const css = {
 	wrapper: 'max-w-7xl w-full mx-auto px-4',
@@ -12,7 +12,7 @@ const css = {
 
 export function CreateVenue({ onSubmit, data, isLoading }) {
 	return (
-		<DictionaryProvider dictionary={builderI18n}>
+		<VenueProvider dictionary={dictionary} data={data}>
 			<div className={css.wrapper}>
 				<div className={css.box}>
 					<Topbar />
@@ -22,6 +22,6 @@ export function CreateVenue({ onSubmit, data, isLoading }) {
 					</div>
 				</div>
 			</div>
-		</DictionaryProvider>
+		</VenueProvider>
 	)
 }

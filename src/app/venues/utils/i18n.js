@@ -1,4 +1,4 @@
-import { useDictionary } from '../context/dictionary'
+import { useDictionary } from '../context/venue'
 import { deepAccess, getType, replacer } from './helpers'
 
 /**
