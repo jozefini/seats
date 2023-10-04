@@ -1,3 +1,5 @@
+import { cn } from '../../utils/helpers'
+import { css as seatCss } from './seat'
 import { useMemo } from 'react'
 import { useSeats } from './use-seats'
 
@@ -8,7 +10,6 @@ const css = {
 	row: 'flex items-center gap-x-6',
 	rowName: 'fw-700 uppercase text-lg text-black/30',
 	cols: 'flex items-center gap-x-2',
-	seat: 'in-flex centered sq-10 border-2 fw-700 text-xs rounded-full bg-red-600 border-red-700 text-white',
 }
 
 export function Selected({ data }) {
@@ -48,7 +49,7 @@ export function Selected({ data }) {
 						<div className={css.rowName}>{rowName}</div>
 						<div className={css.cols}>
 							{cols.map((col, j) => (
-								<div className={css.seat} key={j}>
+								<div className={cn(seatCss.seat, seatCss.selected)} key={j}>
 									{col.name}
 								</div>
 							))}

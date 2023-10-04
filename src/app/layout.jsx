@@ -1,3 +1,4 @@
+// import { CreateVenue } from './venues/create'
 import { Seats } from './seats'
 
 const css = {
@@ -7,6 +8,7 @@ const css = {
 export default function RootLayout() {
 	return (
 		<div className={css.wrapper}>
+			{/* <CreateVenue /> */}
 			<Seats />
 		</div>
 	)

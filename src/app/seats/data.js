@@ -1,6 +1,6 @@
-export default {
+export const seatsData = {
 	a: [
-		{ id: 1, name: 'A1', price: 100 },
+		{ id: 1, name: 'A1', price: 100, style: 'left: 10%; top: 10%' },
 		{ id: 2, name: 'A2', price: 100, reserved: true },
 		{ id: 3, name: 'A3', price: 100 },
 		{ id: 4, name: 'A4', price: 100 },
@@ -8,6 +8,8 @@ export default {
 		{ id: 6, name: 'A6', price: 100 },
 		{ id: 7, name: 'A7', price: 100 },
 		{ id: 8, name: 'A8', price: 100 },
+		{ id: 9, name: 'A9', price: 100 },
+		{ id: 10, name: 'A10', price: 100 },
 	],
 	b: [
 		{ id: 1, name: 'B1', price: 80 },
@@ -18,6 +20,8 @@ export default {
 		{ id: 6, name: 'B6', price: 80 },
 		{ id: 7, name: 'B7', price: 80 },
 		{ id: 8, name: 'B8', price: 80 },
+		{ id: 9, name: 'B9', price: 80 },
+		{ id: 10, name: 'B10', price: 80 },
 	],
 	c: [
 		{ id: 1, name: 'C1', price: 60 },
@@ -28,6 +32,8 @@ export default {
 		{ id: 6, name: 'C6', price: 60 },
 		{ id: 7, name: 'C7', price: 60 },
 		{ id: 8, name: 'C8', price: 60 },
+		{ id: 9, name: 'C9', price: 60 },
+		{ id: 10, name: 'C10', price: 60 },
 	],
 	d: [
 		{ id: 1, name: 'D1', price: 40 },
@@ -38,5 +44,7 @@ export default {
 		{ id: 6, name: 'D6', price: 40, reserved: true },
 		{ id: 7, name: 'D7', price: 40, reserved: true },
 		{ id: 8, name: 'D8', price: 40, reserved: true },
+		{ id: 9, name: 'D9', price: 40 },
+		{ id: 10, name: 'D10', price: 40 },
 	],
 }
