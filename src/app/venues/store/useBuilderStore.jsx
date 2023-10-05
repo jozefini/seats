@@ -25,6 +25,10 @@ const initialStates = {
 	editorWidth: 0,
 	editorHeight: 0,
 
+	// Tracking.
+	mouseY: 0,
+	mouseX: 0,
+
 	// Selection.
 	isSelecting: false,
 	selectionType: SELECTION_TYPES.SEAT,

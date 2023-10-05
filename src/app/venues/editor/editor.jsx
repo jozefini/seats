@@ -1,4 +1,6 @@
-import { useSelection } from '../hooks/selection'
+import { useRef } from 'react'
+import { useMouseTracker } from '../hooks/mouse-tracker'
+import { useSelectionTracker } from '../hooks/selection-tracker'
 import { GridPattern } from './grid-pattern'
 import { Seat } from './seat'
 import { Selection } from './selection'
@@ -9,7 +11,9 @@ const css = {
 }
 
 export function Editor() {
-	const { ref, isSelecting } = useSelection()
+	const ref = useRef()
+	useSelectionTracker(ref)
+	useMouseTracker(ref)
 
 	return (
 		<div className={css.wrapper}>
@@ -21,7 +25,7 @@ export function Editor() {
 				<Seat left='140px' top='60px' id='seat-3' />
 				<Seat left='200px' top='120px' id='seat-4' />
 
-				{isSelecting && <Selection />}
+				<Selection />
 			</div>
 		</div>
 	)

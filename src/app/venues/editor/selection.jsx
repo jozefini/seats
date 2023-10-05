@@ -5,7 +5,11 @@ const css = {
 }
 
 export function Selection() {
-	const styles = useBuilderStore((s) => {
+	const { isSelecting, styles } = useBuilderStore((s) => {
+		if (!s.isSelecting) {
+			return { isSelecting: false }
+		}
+
 		let top = s.startMouseY
 		let height = s.endMouseY - s.startMouseY
 		let left = s.startMouseX
@@ -22,12 +26,19 @@ export function Selection() {
 		}
 
 		return {
-			top,
-			left,
-			width: `${Math.abs(width)}px`,
-			height: `${Math.abs(height)}px`,
+			isSelecting: true,
+			styles: {
+				top,
+				left,
+				width,
+				height,
+			},
 		}
 	})
+
+	if (!isSelecting) {
+		return null
+	}
 
 	return <div className={css.selection} style={styles} />
 }

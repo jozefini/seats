@@ -1,12 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { getBuilderStore, useBuilderStore } from '../store/useBuilderStore'
 
-export function useSelection() {
-	const ref = useRef(null)
-	const { isSelecting, updateStates } = useBuilderStore((s) => ({
-		isSelecting: s.isSelecting,
-		updateStates: s.updateStates,
-	}))
+export function useSelectionTracker(ref) {
+	const updateStates = useBuilderStore((s) => s.updateStates)
 
 	useEffect(() => {
 		const node = ref.current
@@ -81,6 +77,4 @@ export function useSelection() {
 			}
 		}
 	}, [])
-
-	return { ref, isSelecting }
 }
