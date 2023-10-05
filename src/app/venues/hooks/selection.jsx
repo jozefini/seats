@@ -3,24 +3,25 @@ import { useBuilderStore } from '../store/useBuilderStore'
 
 export function useSelection() {
 	const ref = useRef(null)
-	const { isSelecting, updateStates, startMouseX, startMouseY, endMouseX, endMouseY } =
-		useBuilderStore((s) => {
-			return {
-				isSelecting: s.isSelecting,
-				startMouseX: s.startMouseX,
-				startMouseY: s.startMouseY,
-				endMouseX: s.endMouseX,
-				endMouseY: s.endMouseY,
-				updateStates: s.updateStates,
-			}
-		})
+	const { isSelecting, updateStates } = useBuilderStore((s) => {
+		return {
+			isSelecting: s.isSelecting,
+			updateStates: s.updateStates,
+		}
+	})
 
 	useEffect(() => {
 		const node = ref.current
 		let animationFrameId
 
 		const handleMouseDown = (e) => {
-			updateStates({ isSelecting: true, startMouseX: e.clientX, startMouseY: e.clientY })
+			updateStates({
+				isSelecting: true,
+				startMouseX: e.clientX,
+				startMouseY: e.clientY,
+				selectedSeats: [],
+				selectedRows: [],
+			})
 		}
 
 		const handleMouseUp = (e) => {
@@ -57,5 +58,5 @@ export function useSelection() {
 		}
 	}, [])
 
-	return { ref, isSelecting, startMouseX, startMouseY, endMouseX, endMouseY }
+	return { ref, isSelecting }
 }

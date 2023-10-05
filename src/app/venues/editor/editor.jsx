@@ -1,40 +1,20 @@
 import { useSelection } from '../hooks/selection'
+import { Seat } from './seat'
+import { Selection } from './selection'
 
 const css = {
 	wrapper: 'h-full w-full px-8 py-6',
-	box: 'h-full w-full flex items-center justify-center text-2xl text-black border rounded-md bg-gray-50',
-	selection: 'border border-blue-500 bg-blue-200 opacity-50 fixed',
+	box: 'relative h-full w-full flex items-center justify-center text-2xl text-black border rounded-md bg-gray-50',
 }
 
 export function Editor() {
-	const { ref, isSelecting, startMouseX, startMouseY, endMouseX, endMouseY } = useSelection()
-
-	let top = startMouseY
-	let height = endMouseY - startMouseY
-	let left = startMouseX
-	let width = endMouseX - startMouseX
-
-	if (endMouseY < startMouseY) {
-		top = endMouseY
-		height = startMouseY - endMouseY
-	}
-
-	if (endMouseX < startMouseX) {
-		left = endMouseX
-		width = startMouseX - endMouseX
-	}
-
-	const styles = {
-		top,
-		left,
-		width: `${Math.abs(width)}px`,
-		height: `${Math.abs(height)}px`,
-	}
+	const { ref, isSelecting } = useSelection()
 
 	return (
 		<div className={css.wrapper}>
 			<div className={css.box} ref={ref}>
-				{isSelecting && <div className={css.selection} style={styles} />}
+				<Seat />
+				{isSelecting && <Selection />}
 			</div>
 		</div>
 	)
