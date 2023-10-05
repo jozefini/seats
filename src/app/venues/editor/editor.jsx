@@ -7,7 +7,7 @@ import { Selection } from './selection'
 
 const css = {
 	wrapper: 'h-full w-full pl-8 py-6',
-	box: 'relative h-full w-full flex items-center justify-center text-2xl text-black border rounded-md bg-gray-50',
+	box: 'relative h-full w-full flex items-center justify-center text-2xl text-black border rounded-md bg-[rgba(0,0,0,0.01)] overflow-hidden',
 }
 
 export function Editor() {
@@ -24,9 +24,8 @@ export function Editor() {
 				<Seat left='80px' top='20px' id='seat-2' />
 				<Seat left='140px' top='60px' id='seat-3' />
 				<Seat left='200px' top='120px' id='seat-4' />
-
-				<Selection />
 			</div>
+			<Selection />
 		</div>
 	)
 }
