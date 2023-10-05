@@ -6,6 +6,8 @@
 		"save": "Save"
 	},
 	"settings": {
-		"gridLayout": "Grid Layout"
+		"gridHeadline": "Grid Settings",
+		"gridLayout": "Layout",
+		"gridSize": "Size"
 	}
 }

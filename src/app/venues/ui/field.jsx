@@ -16,6 +16,7 @@ export function Field({ label, children, tooltipId }) {
 	return (
 		<FieldProvider
 			value={{
+				label,
 				inputId,
 			}}
 		>

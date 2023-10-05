@@ -9,11 +9,11 @@ const css = {
 }
 
 export function ControlGridLayout() {
+	const { __ } = useDictionary()
 	const { gridLayout, updateStates } = useBuilderStore((s) => ({
 		gridLayout: s.gridLayout,
 		updateStates: s.updateStates,
 	}))
-	const { __ } = useDictionary()
 
 	const handleChange = (newLayout) => {
 		updateStates({ gridLayout: newLayout })
