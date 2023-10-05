@@ -4,8 +4,7 @@ import { FieldProvider } from '../context/field'
 const css = {
 	field: 'grid gap-2',
 	headline: 'flex items-center gap-x-4',
-	label:
-		'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+	label: 'text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
 	control: '',
 }
 

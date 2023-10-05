@@ -4,5 +4,8 @@
 	},
 	"actions": {
 		"save": "Save"
+	},
+	"settings": {
+		"gridLayout": "Grid Layout"
 	}
 }

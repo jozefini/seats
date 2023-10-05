@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import { useBuilderStore } from '../store/useBuilderStore'
+import { GRID_LAYOUT } from '../utils/contants'
 
 const css = {
 	pattern: 'absolute inset-0 w-full h-full',
@@ -7,17 +8,19 @@ const css = {
 
 export function GridPattern() {
 	const patternId = useId()
-	const { gridSize, gridType } = useBuilderStore((s) => ({
+	const { gridSize, gridLayout } = useBuilderStore((s) => ({
 		gridSize: s.gridSize,
-		gridType: s.gridType,
+		gridLayout: s.gridLayout,
 	}))
 
-	const isLine = gridType === 'line' // or 'dot'
+	if (gridLayout === GRID_LAYOUT.NONE) {
+		return null
+	}
 
 	return (
 		<svg width='100%' height='100%' className={css.pattern}>
 			<defs>
-				{isLine ? (
+				{gridLayout === GRID_LAYOUT.LINE ? (
 					<pattern id={patternId} width={gridSize} height={gridSize} patternUnits='userSpaceOnUse'>
 						<path
 							d={`M ${gridSize} 0 L 0 0 0 ${gridSize}`}

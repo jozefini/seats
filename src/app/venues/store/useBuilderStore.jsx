@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
-import { CURSOR_TYPES, GRID_OPACITY, GRID_TYPES, SELECTION_TYPES } from '../utils/contants'
+import { CURSOR_TYPES, GRID_OPACITY, GRID_LAYOUT, SELECTION_TYPES } from '../utils/contants'
 import { getType } from '../utils/helpers'
 
 const ACTIONS = {
@@ -18,7 +18,7 @@ const initialStates = {
 
 	// Grid.
 	gridSize: 10, // in pixels
-	gridType: GRID_TYPES.LINE,
+	gridLayout: GRID_LAYOUT.LINE,
 	gridOpacity: GRID_OPACITY.LOW,
 	editorY: 0,
 	editorX: 0,

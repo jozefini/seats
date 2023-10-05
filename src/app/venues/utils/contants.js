@@ -12,7 +12,7 @@ export const SELECTION_TYPES = {
 	ROW: 'row',
 }
 
-export const GRID_TYPES = {
+export const GRID_LAYOUT = {
 	LINE: 'line',
 	DOT: 'dot',
 	NONE: 'none',

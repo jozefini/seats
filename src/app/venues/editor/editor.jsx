@@ -4,7 +4,7 @@ import { Seat } from './seat'
 import { Selection } from './selection'
 
 const css = {
-	wrapper: 'h-full w-full px-8 py-6',
+	wrapper: 'h-full w-full pl-8 py-6',
 	box: 'relative h-full w-full flex items-center justify-center text-2xl text-black border rounded-md bg-gray-50',
 }
 
