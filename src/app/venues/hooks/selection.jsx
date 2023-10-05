@@ -15,16 +15,24 @@ export function useSelection() {
 		let animationFrameId
 
 		const handleMouseDown = (e) => {
+			if (e.button !== 0) return // Only on left click
+
 			updateStates({
 				isSelecting: true,
 				startMouseX: e.clientX,
 				startMouseY: e.clientY,
-				selectedSeats: [],
-				selectedRows: [],
 			})
+
+			if (!e.target.classList.contains('seat')) {
+				updateStates({
+					selectedIds: [],
+				})
+			}
 		}
 
 		const handleMouseUp = (e) => {
+			if (e.button !== 0) return // Only on left click
+
 			updateStates({ isSelecting: false })
 			if (animationFrameId) {
 				cancelAnimationFrame(animationFrameId)
@@ -32,6 +40,8 @@ export function useSelection() {
 		}
 
 		const handleMouseMove = (e) => {
+			if (e.button !== 0) return // Only on left click
+
 			animationFrameId = requestAnimationFrame(() => {
 				updateStates({ endMouseX: e.clientX, endMouseY: e.clientY })
 			})

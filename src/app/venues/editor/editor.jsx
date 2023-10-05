@@ -13,7 +13,10 @@ export function Editor() {
 	return (
 		<div className={css.wrapper}>
 			<div className={css.box} ref={ref}>
-				<Seat />
+				<Seat left='20px' top='20px' id='seat-1' />
+				<Seat left='80px' top='20px' id='seat-2' />
+				<Seat left='140px' top='60px' id='seat-3' />
+				<Seat left='200px' top='120px' id='seat-4' />
 				{isSelecting && <Selection />}
 			</div>
 		</div>

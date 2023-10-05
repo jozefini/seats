@@ -1,14 +1,20 @@
-import { cn } from '../../../utils/helpers'
 import { useSelectedElement } from '../hooks/selected-element'
+import { classNames } from '../utils/helpers'
 
 const css = {
-	el: 'w-10 h-10 border rounded-md absolute top-10 left-10',
+	el: 'seat w-8 h-8 border rounded-full absolute',
 	elDefault: 'bg-gray-200 border-gray-300',
-	elSelected: 'bg-red-500 border-red-600',
+	elSelected: 'bg-blue-300 border-blue-500 hover:cursor-move',
 }
 
-export function Seat() {
-	const { ref, isSelected } = useSelectedElement('seat-1')
+export function Seat({ left = '20px', top = '20px', id = 'seat-1' }) {
+	const { ref, isSelected } = useSelectedElement(id)
 
-	return <div className={cn(css.el, isSelected ? css.elSelected : css.elDefault)} ref={ref} />
+	return (
+		<div
+			className={classNames(css.el, isSelected ? css.elSelected : css.elDefault)}
+			ref={ref}
+			style={{ left, top }}
+		/>
+	)
 }

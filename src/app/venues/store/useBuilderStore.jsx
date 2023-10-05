@@ -19,10 +19,7 @@ const initialStates = {
 	// Selection.
 	isSelecting: false,
 	selectionType: SELECTION_TYPES.SEAT,
-	selectedSeat: null,
-	selectedSeats: [],
-	selectedRow: null,
-	selectedRows: [],
+	selectedIds: [],
 	startMouseY: 0,
 	startMouseX: 0,
 	endMouseY: 0,
@@ -37,18 +34,15 @@ const builderStore = create(
 	immer((set, get) => ({
 		...initialStates,
 		selectElement: (id) => {
+			if (!get().selectedIds.includes(id)) {
+				set((draft) => {
+					draft.selectedIds.push(id)
+				})
+			}
+		},
+		unselectElement: (id) => {
 			set((draft) => {
-				if (get().selectionType === SELECTION_TYPES.ROW) {
-					draft.selectedRow = id
-					if (!draft.selectedRows.includes(id)) {
-						draft.selectedRows.push(id)
-					}
-				} else {
-					draft.selectedSeat = id
-					if (!draft.selectedSeats.includes(id)) {
-						draft.selectedSeats.push(id)
-					}
-				}
+				draft.selectedIds = draft.selectedIds.filter((selectedId) => selectedId !== id)
 			})
 		},
 		changeSelectionType: (type) => {
@@ -59,15 +53,7 @@ const builderStore = create(
 
 			set((draft) => {
 				draft.selectionType = type
-
-				// Reset any existing selection.
-				if (type === SELECTION_TYPES.ROW) {
-					draft.selectedSeat = null
-					draft.selectedSeats = []
-				} else {
-					draft.selectedRow = null
-					draft.selectedRows = []
-				}
+				draft.selectedIds = []
 			})
 		},
 		addToHistory: (action, data) => {

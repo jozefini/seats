@@ -1,17 +1,21 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useBuilderStore } from '../store/useBuilderStore'
 import { SELECTION_TYPES } from '../utils/contants'
 
 export function useSelectedElement(id) {
 	const ref = useRef(null)
-	const isSelected = useBuilderStore((s) => {
-		const selectedList = s.selectionType === SELECTION_TYPES.ROW ? s.selectedRows : s.selectedSeats
-		let isAlreadySelected = selectedList.includes(id)
-		if (isAlreadySelected) {
-			return true
-		}
-		if (!s.isSelecting) {
-			return false
+	const { isSelected, isSelecting, selectElement, unselectElement } = useBuilderStore((s) => {
+		const selectElement = s.selectElement
+		const unselectElement = s.unselectElement
+		const isSelecting = s.isSelecting
+
+		if (!isSelecting) {
+			return {
+				isSelected: s.selectedIds.includes(id),
+				isSelecting,
+				selectElement,
+				unselectElement,
+			}
 		}
 
 		const startMouseX = Math.min(s.startMouseX, s.endMouseX)
@@ -29,11 +33,18 @@ export function useSelectedElement(id) {
 		const isOverEl =
 			startMouseX < elRight && endMouseX > elLeft && startMouseY < elBottom && endMouseY > elTop
 
-		if (isOverEl && !isAlreadySelected) {
-			s.selectElement(id)
+		return {
+			isSelected: isOverEl,
+			isSelecting,
+			selectElement,
+			unselectElement,
 		}
-		return isOverEl
 	})
+
+	useEffect(() => {
+		if (!isSelecting) return
+		isSelected ? selectElement(id) : unselectElement(id)
+	}, [isSelected])
 
 	return {
 		ref,
