@@ -11,3 +11,15 @@ export const SELECTION_TYPES = {
 	SEAT: 'seat',
 	ROW: 'row',
 }
+
+export const GRID_TYPES = {
+	LINE: 'line',
+	DOT: 'dot',
+	NONE: 'none',
+}
+
+export const GRID_OPACITY = {
+	LOW: 0.15,
+	MEDIUM: 0.3,
+	HIGH: 0.5,
+}

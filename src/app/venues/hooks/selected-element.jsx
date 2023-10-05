@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import { useBuilderStore } from '../store/useBuilderStore'
-import { SELECTION_TYPES } from '../utils/contants'
 
 export function useSelectedElement(id) {
 	const ref = useRef(null)

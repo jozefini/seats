@@ -12,22 +12,33 @@ export function useSelection() {
 
 	useEffect(() => {
 		const node = ref.current
+		if (!node) return // If the node is not available, do nothing.
+
 		let animationFrameId
+
+		// Set editor coordinates.
+		const editorRect = node.getBoundingClientRect()
+		updateStates({
+			editorX: editorRect.x,
+			editorY: editorRect.y,
+			editorWidth: editorRect.width,
+			editorHeight: editorRect.height,
+		})
 
 		const handleMouseDown = (e) => {
 			if (e.button !== 0) return // Only on left click
+			if (e.target.classList.contains('seat')) {
+				e.preventDefault()
+				e.stopPropagation()
+				return // If the target is a seat, do nothing.
+			}
 
 			updateStates({
 				isSelecting: true,
 				startMouseX: e.clientX,
 				startMouseY: e.clientY,
+				selectedIds: [],
 			})
-
-			if (!e.target.classList.contains('seat')) {
-				updateStates({
-					selectedIds: [],
-				})
-			}
 		}
 
 		const handleMouseUp = (e) => {
