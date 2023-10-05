@@ -14,6 +14,7 @@ export function Seat({ left = '20px', top = '20px', id = 'seat-1' }) {
 		<div
 			className={classNames(css.el, isSelected ? css.elSelected : css.elDefault)}
 			ref={ref}
+			data-id={id}
 			style={{ left, top }}
 		/>
 	)

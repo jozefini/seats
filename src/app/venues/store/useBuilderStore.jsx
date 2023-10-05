@@ -120,4 +120,8 @@ const builderStore = create(
 	})),
 )
 
+export const getBuilderStore = (select) => {
+	const states = builderStore.getState()
+	return select ? select(states) : states
+}
 export const useBuilderStore = (select) => builderStore(select, shallow)

@@ -1,14 +1,12 @@
 import { useEffect, useRef } from 'react'
-import { useBuilderStore } from '../store/useBuilderStore'
+import { getBuilderStore, useBuilderStore } from '../store/useBuilderStore'
 
 export function useSelection() {
 	const ref = useRef(null)
-	const { isSelecting, updateStates } = useBuilderStore((s) => {
-		return {
-			isSelecting: s.isSelecting,
-			updateStates: s.updateStates,
-		}
-	})
+	const { isSelecting, updateStates } = useBuilderStore((s) => ({
+		isSelecting: s.isSelecting,
+		updateStates: s.updateStates,
+	}))
 
 	useEffect(() => {
 		const node = ref.current
@@ -28,9 +26,14 @@ export function useSelection() {
 		const handleMouseDown = (e) => {
 			if (e.button !== 0) return // Only on left click
 			if (e.target.classList.contains('seat')) {
-				e.preventDefault()
-				e.stopPropagation()
-				return // If the target is a seat, do nothing.
+				const seatId = e.target.getAttribute('data-id')
+				const hasSelection = getBuilderStore((s) => s.selectedIds.includes(seatId))
+
+				if (hasSelection) {
+					e.preventDefault()
+					e.stopPropagation()
+					return // If the target is a seat, do nothing.
+				}
 			}
 
 			updateStates({
