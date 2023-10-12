@@ -1,9 +1,13 @@
 import { RowProvider } from '../../context/selection'
 import { useBuilderStore } from '../../store/useBuilderStore'
+import { classNames } from '../../utils/helpers'
 import { Seat } from './seat'
 
 const css = {
-	wrapper: 'flex items-center',
+	wrapper:
+		'flex items-start absolute left-0 top-0 text-[calc(var(--seat-size)/2)] gap-[var(--row-gap)] translate-x-[var(--row-x)] translate-y-[var(--row-y)]',
+	normalRow: 'flex-row',
+	reversedRow: 'flex-row-reverse',
 }
 
 export function Row(props) {
@@ -17,13 +21,12 @@ export function Row(props) {
 	return (
 		<RowProvider {...props}>
 			<div
-				className={css.wrapper}
+				className={classNames(css.wrapper, reversed ? css.reversedRow : css.normalRow)}
 				style={{
-					'--seat-size': `${seatSize}%`,
-					transform: `translate(${x}%, ${y}%)`,
-					flexDirection: reversed ? 'row-reverse' : 'row',
-					paddingRight: `${x}%`,
-					gap: `${spaceBetweenSeats}em`,
+					'--seat-size': `${seatSize / 16}rem`,
+					'--row-gap': `${spaceBetweenSeats / 16}rem`,
+					'--row-x': `${x}px`,
+					'--row-y': `${y}px`,
 				}}
 			>
 				{seats.map((seat, index) => (

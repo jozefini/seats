@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import { useMouseTracker } from '../hooks/mouse-tracker'
 import { useSelectionTracker } from '../hooks/selection-tracker'
+import { useDraggingTracker } from '../hooks/dragging-tracker'
+import { useKeyboardTracker } from '../hooks/keyboard-tracker'
 import { useBuilderStore } from '../store/useBuilderStore'
 import { GridPattern } from './grid-pattern'
 import { Selection } from './selection'
@@ -16,6 +18,8 @@ export function Editor() {
 	const rows = useBuilderStore((s) => s.rows)
 	useSelectionTracker(ref)
 	useMouseTracker(ref)
+	useDraggingTracker(ref)
+	useKeyboardTracker(ref)
 
 	return (
 		<div className={css.wrapper}>

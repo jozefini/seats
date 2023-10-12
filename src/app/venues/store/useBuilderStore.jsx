@@ -16,7 +16,7 @@ const createTestSeats = (rowId, seatsCount) => {
 	let seats = []
 	let number = 1
 	for (let i = 0; i < seatsCount; i++) {
-		const isEmpty = [21, 22, 23, 24, 5, 6, 7].includes(i)
+		const isEmpty = [].includes(i)
 		seats.push({
 			id: `${rowId}-${i + 1}`,
 			reserved: false,
@@ -44,8 +44,8 @@ const initialStates = {
 	editorHeight: 0,
 
 	// Seats.
-	seatSize: 2, // in width percentage
-	spaceBetweenSeats: 0.1, // in em
+	seatSize: 10, // in pixels
+	spaceBetweenSeats: 2, // in pixels
 
 	// Tracking.
 	mouseY: 0,
@@ -53,12 +53,17 @@ const initialStates = {
 
 	// Selection.
 	isSelecting: false,
+	isEditorFocused: false,
 	selectedSeats: [],
 	selectedRows: [],
 	startMouseY: 0,
 	startMouseX: 0,
 	endMouseY: 0,
 	endMouseX: 0,
+
+	// Dragging.
+	isDragging: false,
+	draggedRows: [],
 
 	// Rows data.
 	rows: [
@@ -67,10 +72,20 @@ const initialStates = {
 			label: 'Row 1',
 			price: 0,
 			defaultPrice: 0,
-			editor: { x: 10, y: 20 },
+			editor: { x: 10, y: 20, curve: 0 },
 			reversed: false,
 			beginWithSeatNumber: 1,
 			seats: createTestSeats('a-1', 40),
+		},
+		{
+			id: 'b-1',
+			label: 'Row 2',
+			price: 0,
+			defaultPrice: 0,
+			editor: { x: 10, y: 20, curve: 0 },
+			reversed: false,
+			beginWithSeatNumber: 1,
+			seats: createTestSeats('b-1', 40),
 		},
 	],
 
@@ -113,6 +128,28 @@ const builderStore = create(
 						)
 					}
 				}
+			})
+		},
+		dragSelectedRows: (x, y) => {
+			const { draggedRows } = get()
+			if (!draggedRows.length) return false
+
+			set((draft) => {
+				draggedRows.forEach(({ x: initX, y: initY, rowIndex }) => {
+					draft.rows[rowIndex].editor.x = initX + x
+					draft.rows[rowIndex].editor.y = initY + y
+				})
+			})
+		},
+		moveSelectedRows: (x, y) => {
+			if (!get().selectedRows.length) return false
+
+			set((draft) => {
+				draft.selectedRows.forEach((rowId) => {
+					const row = draft.rows.find((row) => row.id === rowId)
+					row.editor.x += x
+					row.editor.y += y
+				})
 			})
 		},
 		addToHistory: (action, data) => {

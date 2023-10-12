@@ -1,21 +1,20 @@
+import { useMemo } from 'react'
 import { useSelectedElement } from '../../hooks/selected-element'
 import { useBuilderStore } from '../../store/useBuilderStore'
 import { classNames, getCurveOffset } from '../../utils/helpers'
 import { useRowContext } from '../../context/selection'
-import { useMemo } from 'react'
 
 const css = {
-	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] overflow-hidden select-none',
+	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mt-[var(--seat-offset)] select-none hover:cursor-move',
 	elDefault: 'bg-gray-200 border-gray-300 text-black/50',
-	elSelected: 'bg-blue-300 border-blue-500 text-blue-500 hover:cursor-move',
-	square: 'pb-[100%]',
+	elSelected: 'bg-blue-300 border-blue-500 text-blue-500',
 	emptySeat: 'invisible opacity-0 pointer-events-none',
-	number:
-		'absolute inset-0 w-full h-full flex items-center justify-center text-[calc(var(--seat-size)*20)]',
+	number: 'absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none',
 }
 
 export function Seat({ index, number, id, type }) {
-	const { id: rowId } = useRowContext()
+	const { id: rowId, editor } = useRowContext()
+	const { curve } = editor
 	const { ref } = useSelectedElement({ rowId, seatId: id })
 	const { isSelected, totalSeats } = useBuilderStore((s) => ({
 		isSelected: s.selectedRows.includes(rowId),
@@ -23,11 +22,8 @@ export function Seat({ index, number, id, type }) {
 	}))
 
 	const curveOffset = useMemo(() => {
-		if ('empty' === type) {
-			return 0 // No curve offset for empty seats.
-		}
-		return getCurveOffset(index, totalSeats - 1, 120)
-	}, [totalSeats])
+		return getCurveOffset(index, totalSeats - 1, curve)
+	}, [totalSeats, curve])
 
 	return (
 		<div
@@ -41,10 +37,9 @@ export function Seat({ index, number, id, type }) {
 				'empty' === type && css.emptySeat,
 			)}
 			style={{
-				transform: `translateY(${curveOffset}%)`,
+				'--seat-offset': `${curveOffset}px`,
 			}}
 		>
-			<div className={css.square} />
 			<div className={css.number}>{number}</div>
 		</div>
 	)

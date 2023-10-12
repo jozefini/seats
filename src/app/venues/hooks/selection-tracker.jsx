@@ -21,18 +21,44 @@ export function useSelectionTracker(ref) {
 
 		const handleMouseDown = (e) => {
 			if (e.button !== 0) return // Only on left click
+
 			if (e.target.classList.contains('venue-seat')) {
-				const { rowId, seatId } = e.target.dataset
-				const hasSelection = getBuilderStore((s) => s.selectedRows.includes(rowId))
+				const { rowId } = e.target.dataset
+				const { hasSelection, draggedRows, selectedRows } = getBuilderStore((s) => {
+					const selectedRows = !s.selectedRows.length ? [rowId] : s.selectedRows
+					const hasSelection = selectedRows.includes(rowId)
+					const draggedRows = []
+
+					if (hasSelection) {
+						s.rows.forEach((row, i) => {
+							if (selectedRows.includes(row.id)) {
+								draggedRows.push({
+									rowIndex: i,
+									x: row.editor.x,
+									y: row.editor.y,
+								})
+							}
+						})
+					}
+
+					return { hasSelection, draggedRows, selectedRows }
+				})
 
 				if (hasSelection) {
-					e.preventDefault()
-					e.stopPropagation()
+					updateStates({
+						isDragging: true,
+						draggedRows,
+						selectedRows,
+						startMouseX: e.clientX,
+						startMouseY: e.clientY,
+					})
 					return // If the target is a seat, do nothing.
 				}
 			}
 
 			updateStates({
+				isDragging: false,
+				draggedRows: [],
 				isSelecting: true,
 				startMouseX: e.clientX,
 				startMouseY: e.clientY,
@@ -44,7 +70,7 @@ export function useSelectionTracker(ref) {
 		const handleMouseUp = (e) => {
 			if (e.button !== 0) return // Only on left click
 
-			updateStates({ isSelecting: false })
+			updateStates({ isSelecting: false, isDragging: false, draggedRows: [] })
 			if (animationFrameId) {
 				cancelAnimationFrame(animationFrameId)
 			}

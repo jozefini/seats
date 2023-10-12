@@ -19,9 +19,9 @@ export function SeatSize() {
 			<RangeSlider
 				defaultValue={size}
 				value={size}
-				min={0.2}
-				step={0.1}
-				max={6}
+				min={5}
+				step={1}
+				max={50}
 				onChange={handleChange}
 			/>
 		</Field>

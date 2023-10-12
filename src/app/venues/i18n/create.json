@@ -12,6 +12,8 @@
 		"gridHeadline": "Guide Lines Settings",
 		"gridLayout": "Mode",
 		"gridSize": "Size",
-		"gridOpacity": "Opacity"
+		"gridOpacity": "Opacity",
+		"rowCurve": "Row Curve",
+		"rowCurveDiffValues": "Selected rows have different curve values"
 	}
 }

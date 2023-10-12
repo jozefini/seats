@@ -3,6 +3,7 @@ import { FieldGroup } from '../ui/field-group'
 import { GridLayout } from './controls/grid-layout'
 import { GridOpacity } from './controls/grid-opacity'
 import { GridSize } from './controls/grid-size'
+import { RowCurve } from './controls/row-curve'
 import { SeatSize } from './controls/seat-size'
 import { SpaceBetweenSeats } from './controls/space-between-seats'
 
@@ -17,6 +18,7 @@ export function Sidebar() {
 		<div className={css.wrapper}>
 			<FieldGroup title={__('settings.seatHeadline')}>
 				<SeatSize />
+				<RowCurve />
 				<SpaceBetweenSeats />
 			</FieldGroup>
 
