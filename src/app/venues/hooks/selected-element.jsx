@@ -1,27 +1,25 @@
 import { useEffect, useRef } from 'react'
 import { useBuilderStore } from '../store/useBuilderStore'
 
-export function useSelectedElement(id) {
+export function useSelectedElement({ rowId, seatId, isDisabled }) {
 	const ref = useRef(null)
-	const { isSelected, isSelecting, selectElement, unselectElement } = useBuilderStore((s) => {
-		const selectElement = s.selectElement
-		const unselectElement = s.unselectElement
-		const isSelecting = s.isSelecting
-
-		if (!isSelecting) {
-			return {
-				isSelected: s.selectedIds.includes(id),
-				isSelecting,
-				selectElement,
-				unselectElement,
-			}
+	const { isSelected, select, unselect } = useBuilderStore((s) => ({
+		isSelected: s.selectedRows.includes(rowId),
+		select: s.select,
+		unselect: s.unselect,
+	}))
+	const inSelection = useBuilderStore((s) => {
+		if (!s.isSelecting) {
+			return s.selectedRows.includes(rowId)
 		}
 
+		// Create coordinates for the selection box.
 		const startMouseX = Math.min(s.startMouseX, s.endMouseX)
 		const endMouseX = Math.max(s.startMouseX, s.endMouseX)
 		const startMouseY = Math.min(s.startMouseY, s.endMouseY)
 		const endMouseY = Math.max(s.startMouseY, s.endMouseY)
 
+		// Create coordinates for the element.
 		const el = ref.current
 		const elRect = el.getBoundingClientRect()
 		const elTop = elRect.top
@@ -29,21 +27,23 @@ export function useSelectedElement(id) {
 		const elRight = elRect.right
 		const elBottom = elRect.bottom
 
-		const isOverEl =
+		// Check if the element is in the selection box.
+		return (
 			startMouseX < elRight && endMouseX > elLeft && startMouseY < elBottom && endMouseY > elTop
-
-		return {
-			isSelected: isOverEl,
-			isSelecting,
-			selectElement,
-			unselectElement,
-		}
+		)
 	})
 
 	useEffect(() => {
-		if (!isSelecting) return
-		isSelected ? selectElement(id) : unselectElement(id)
-	}, [isSelected])
+		if (isDisabled) return
+
+		if (inSelection) {
+			select(rowId, seatId)
+		} else {
+			unselect(rowId, seatId)
+		}
+
+		return () => !isDisabled && unselect(rowId, seatId)
+	}, [inSelection, isDisabled])
 
 	return {
 		ref,

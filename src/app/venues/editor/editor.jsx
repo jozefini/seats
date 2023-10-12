@@ -7,7 +7,7 @@ import { Selection } from './selection'
 import { Row } from './row'
 
 const css = {
-	wrapper: 'h-full w-full pl-8 py-6',
+	wrapper: 'h-full w-full pl-8 py-6 max-w-full overflow-auto',
 	box: 'relative h-full w-full block text-2xl text-black border rounded-md bg-[rgba(0,0,0,0.01)] overflow-hidden',
 }
 

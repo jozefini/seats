@@ -19,14 +19,15 @@ export function Row(props) {
 			<div
 				className={css.wrapper}
 				style={{
-					fontSize: `${seatSize / 16}rem`,
+					'--seat-size': `${seatSize}%`,
 					transform: `translate(${x}%, ${y}%)`,
 					flexDirection: reversed ? 'row-reverse' : 'row',
+					paddingRight: `${x}%`,
 					gap: `${spaceBetweenSeats}em`,
 				}}
 			>
-				{seats.map((seat) => (
-					<Seat key={seat.id} {...seat} />
+				{seats.map((seat, index) => (
+					<Seat key={seat.id} index={index} {...seat} />
 				))}
 			</div>
 		</RowProvider>

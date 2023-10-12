@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
-import { CURSOR_TYPES, GRID_LAYOUT, SELECTION_TYPES } from '../utils/contants'
+import { CURSOR_TYPES, GRID_LAYOUT } from '../utils/contants'
 import { getType } from '../utils/helpers'
 
 const ACTIONS = {
@@ -10,6 +10,24 @@ const ACTIONS = {
 	REMOVE_ROW: 'REMOVE_ROW',
 	REMOVE_SEAT: 'REMOVE_SEAT',
 	DRAG_ROW: 'DRAG_ROW',
+}
+
+const createTestSeats = (rowId, seatsCount) => {
+	let seats = []
+	let number = 1
+	for (let i = 0; i < seatsCount; i++) {
+		const isEmpty = [21, 22, 23, 24, 5, 6, 7].includes(i)
+		seats.push({
+			id: `${rowId}-${i + 1}`,
+			reserved: false,
+			number: isEmpty ? '' : number,
+			type: isEmpty ? 'empty' : 'default',
+		})
+		if (!isEmpty) {
+			number++
+		}
+	}
+	return seats
 }
 
 const initialStates = {
@@ -27,7 +45,7 @@ const initialStates = {
 
 	// Seats.
 	seatSize: 2, // in width percentage
-	spaceBetweenSeats: 3, // in em
+	spaceBetweenSeats: 0.1, // in em
 
 	// Tracking.
 	mouseY: 0,
@@ -35,8 +53,8 @@ const initialStates = {
 
 	// Selection.
 	isSelecting: false,
-	selectionType: SELECTION_TYPES.SEAT,
-	selectedIds: [],
+	selectedSeats: [],
+	selectedRows: [],
 	startMouseY: 0,
 	startMouseX: 0,
 	endMouseY: 0,
@@ -52,33 +70,7 @@ const initialStates = {
 			editor: { x: 10, y: 20 },
 			reversed: false,
 			beginWithSeatNumber: 1,
-			seats: [
-				{
-					id: 'a-1-1',
-					reserved: false,
-					type: 'default',
-				},
-				{
-					id: 'a-1-2',
-					reserved: false,
-					type: 'default',
-				},
-				{
-					id: 'a-1-3',
-					reserved: false,
-					type: 'default',
-				},
-				{
-					id: 'a-1-4',
-					reserved: false,
-					type: 'default',
-				},
-				{
-					id: 'a-1-5',
-					reserved: false,
-					type: 'default',
-				},
-			],
+			seats: createTestSeats('a-1', 40),
 		},
 	],
 
@@ -90,27 +82,37 @@ const initialStates = {
 const builderStore = create(
 	immer((set, get) => ({
 		...initialStates,
-		selectElement: (id) => {
-			if (!get().selectedIds.includes(id)) {
-				set((draft) => {
-					draft.selectedIds.push(id)
-				})
-			}
-		},
-		unselectElement: (id) => {
-			set((draft) => {
-				draft.selectedIds = draft.selectedIds.filter((selectedId) => selectedId !== id)
-			})
-		},
-		changeSelectionType: (type) => {
-			// If the type is not valid or is the same as the current one, do nothing.
-			if (!SELECTION_TYPES.hasOwnProperty(type) || type === get().selectionType) {
-				return false
-			}
+		select: (rowId, seatId) => {
+			if (!rowId) return false
 
 			set((draft) => {
-				draft.selectionType = type
-				draft.selectedIds = []
+				if (!draft.selectedRows.includes(rowId)) {
+					draft.selectedRows.push(rowId)
+				}
+				if (seatId && !draft.selectedSeats.includes(seatId)) {
+					draft.selectedSeats.push(seatId)
+				}
+			})
+		},
+		unselect: (rowId, seatId) => {
+			if (!rowId) return false
+
+			set((draft) => {
+				if (!seatId) {
+					draft.selectedRows = draft.selectedRows.filter((selectedRowId) => selectedRowId !== rowId)
+				} else {
+					const newSelectedSeats = draft.selectedSeats.filter(
+						(selectedSeatId) => selectedSeatId !== seatId,
+					)
+					draft.selectedSeats = newSelectedSeats
+
+					// After all seats are unselected, we remove the row from the selected rows.
+					if (!newSelectedSeats.length) {
+						draft.selectedRows = draft.selectedRows.filter(
+							(selectedRowId) => selectedRowId !== rowId,
+						)
+					}
+				}
 			})
 		},
 		addToHistory: (action, data) => {

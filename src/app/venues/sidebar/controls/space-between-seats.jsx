@@ -19,9 +19,9 @@ export function SpaceBetweenSeats() {
 			<RangeSlider
 				defaultValue={size}
 				value={size}
-				min={1}
-				step={1}
-				max={40}
+				min={0.1}
+				step={0.1}
+				max={2}
 				onChange={handleChange}
 			/>
 		</Field>

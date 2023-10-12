@@ -22,8 +22,8 @@ export function useSelectionTracker(ref) {
 		const handleMouseDown = (e) => {
 			if (e.button !== 0) return // Only on left click
 			if (e.target.classList.contains('venue-seat')) {
-				const rowId = e.target.getAttribute('data-row-id')
-				const hasSelection = getBuilderStore((s) => s.selectedIds.includes(rowId))
+				const { rowId, seatId } = e.target.dataset
+				const hasSelection = getBuilderStore((s) => s.selectedRows.includes(rowId))
 
 				if (hasSelection) {
 					e.preventDefault()
@@ -36,7 +36,8 @@ export function useSelectionTracker(ref) {
 				isSelecting: true,
 				startMouseX: e.clientX,
 				startMouseY: e.clientY,
-				selectedIds: [],
+				selectedRows: [],
+				selectedSeats: [],
 			})
 		}
 

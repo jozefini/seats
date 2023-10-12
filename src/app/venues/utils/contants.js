@@ -7,11 +7,6 @@ export const CURSOR_TYPES = {
 	REMOVE_ROW: 'remove-row',
 }
 
-export const SELECTION_TYPES = {
-	SEAT: 'seat',
-	ROW: 'row',
-}
-
 export const GRID_LAYOUT = {
 	LINE: 'line',
 	DOT: 'dot',
