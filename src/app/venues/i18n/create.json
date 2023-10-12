@@ -6,8 +6,11 @@
 		"save": "Save"
 	},
 	"settings": {
+		"seatHeadline": "Seat Settings",
+		"seatSize": "Size",
 		"gridHeadline": "Grid Settings",
 		"gridLayout": "Layout",
-		"gridSize": "Size"
+		"gridSize": "Size",
+		"gridOpacity": "Opacity"
 	}
 }

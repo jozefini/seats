@@ -17,9 +17,3 @@ export const GRID_LAYOUT = {
 	DOT: 'dot',
 	NONE: 'none',
 }
-
-export const GRID_OPACITY = {
-	LOW: 0.15,
-	MEDIUM: 0.3,
-	HIGH: 0.5,
-}

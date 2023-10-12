@@ -1,10 +1,12 @@
 import { useDictionary } from '../hooks/dictionary'
 import { FieldGroup } from '../ui/field-group'
-import { ControlGridLayout } from './control-grid-layout'
-import { ControlGridSize } from './control-grid-size'
+import { GridLayout } from './controls/grid-layout'
+import { GridOpacity } from './controls/grid-opacity'
+import { GridSize } from './controls/grid-size'
+import { SeatSize } from './controls/seat-size'
 
 const css = {
-	wrapper: 'h-full w-full pr-8 py-6',
+	wrapper: 'h-full w-full pr-8 py-6 flex flex-col gap-y-8',
 }
 
 export function Sidebar() {
@@ -12,9 +14,14 @@ export function Sidebar() {
 
 	return (
 		<div className={css.wrapper}>
+			<FieldGroup title={__('settings.seatHeadline')}>
+				<SeatSize />
+			</FieldGroup>
+
 			<FieldGroup title={__('settings.gridHeadline')}>
-				<ControlGridLayout />
-				<ControlGridSize />
+				<GridLayout />
+				<GridSize />
+				<GridOpacity />
 			</FieldGroup>
 		</div>
 	)

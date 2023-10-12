@@ -5,10 +5,10 @@ import { createBrowserRouter } from 'react-router-dom'
 export const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <RootLayout />,
+		element: <CreatePage />,
 	},
 	{
 		path: '/create',
-		element: <CreatePage />,
+		element: <RootLayout />,
 	},
 ])
