@@ -8,8 +8,9 @@
 	"settings": {
 		"seatHeadline": "Seat Settings",
 		"seatSize": "Size",
-		"gridHeadline": "Grid Settings",
-		"gridLayout": "Layout",
+		"spaceBetweenSeats": "Space between",
+		"gridHeadline": "Guide Lines Settings",
+		"gridLayout": "Mode",
 		"gridSize": "Size",
 		"gridOpacity": "Opacity"
 	}

@@ -1,5 +1,6 @@
 import * as Slider from '@radix-ui/react-slider'
 import { useFieldContext } from '../context/field'
+import { classNames } from '../utils/helpers'
 
 const css = {
 	wrapper:
@@ -10,12 +11,12 @@ const css = {
 		'block h-4 w-4 rounded-full border border-black/50 bg-white shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 disabled:pointer-events-none disabled:opacity-50',
 }
 
-export function RangeSlider({ min, max, step, value, defaultValue, onChange }) {
+export function RangeSlider({ className, min, max, step, value, defaultValue, onChange }) {
 	const { label } = useFieldContext()
 
 	return (
 		<Slider.Root
-			className={css.wrapper}
+			className={classNames(css.wrapper, className)}
 			defaultValue={[defaultValue ?? min ?? 0]}
 			value={[value ?? min ?? 0]}
 			min={min ?? 0}

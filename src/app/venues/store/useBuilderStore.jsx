@@ -26,7 +26,8 @@ const initialStates = {
 	editorHeight: 0,
 
 	// Seats.
-	seatSize: 20, // in pixels
+	seatSize: 2, // in width percentage
+	spaceBetweenSeats: 3, // in em
 
 	// Tracking.
 	mouseY: 0,
@@ -44,49 +45,37 @@ const initialStates = {
 	// Rows data.
 	rows: [
 		{
-			// INPUT
-			// The id of the row. It should be unique among other rows.
-			// Is also used as prefix for the seats id.
 			id: 'a-1',
-			// INPUT
-			// The label of the row.
 			label: 'Row 1',
-			// INPUT
-			// The actual price for this row, can be set during the event creation,
-			// if not set, the default price will be used.
 			price: 0,
-			// INPUT
-			// The default price for this row, can be set during the venue creation,
-			// it helps to have a default price for all the seats in this row.
-			// when the event is created.
 			defaultPrice: 0,
-			// RANGE SLIDER + AUTO-GENERATED FROM DRAGGING
-			// The coordinates and styles for editor/builder.
-			editor: { x: 10, y: 20, spaceBetween: 10 },
-			// SWITCH
-			// If the row is reversed, the seats will be rendered from right to left.
-			// Means the number in the seat id will be decremented instead of incremented.
+			editor: { x: 10, y: 20 },
 			reversed: false,
-			// INPUT
-			// The number of the first seat in this row which will be used in the id of the seat.
-			// Every other seat will be incremented by one.
 			beginWithSeatNumber: 1,
-
-			// The seats in this row.
 			seats: [
 				{
-					// AUTO-GENERATED
-					// The id of the seat. It should be unique for this row.
-					// The row id will be used as prefix, this will generate a human readable id like `a-1-1`
-					// where `a-1` is the row id and `1` is the seat number.
 					id: 'a-1-1',
-					// SWITCH
-					// Reserved seats are not selectable.
-					// Purchased seats or reserved during event creation will be set to true.
 					reserved: false,
-					// SELECT OR RADIO
-					// Type of the seat, can be: 'default', 'wheelchair', 'empty' etc.
-					// Empty seats will be invisible, but will take the UI space for design purposes.
+					type: 'default',
+				},
+				{
+					id: 'a-1-2',
+					reserved: false,
+					type: 'default',
+				},
+				{
+					id: 'a-1-3',
+					reserved: false,
+					type: 'default',
+				},
+				{
+					id: 'a-1-4',
+					reserved: false,
+					type: 'default',
+				},
+				{
+					id: 'a-1-5',
+					reserved: false,
 					type: 'default',
 				},
 			],

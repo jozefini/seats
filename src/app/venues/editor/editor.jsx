@@ -1,17 +1,19 @@
 import { useRef } from 'react'
 import { useMouseTracker } from '../hooks/mouse-tracker'
 import { useSelectionTracker } from '../hooks/selection-tracker'
+import { useBuilderStore } from '../store/useBuilderStore'
 import { GridPattern } from './grid-pattern'
-import { Seat } from './seat'
 import { Selection } from './selection'
+import { Row } from './row'
 
 const css = {
 	wrapper: 'h-full w-full pl-8 py-6',
-	box: 'relative h-full w-full flex items-center justify-center text-2xl text-black border rounded-md bg-[rgba(0,0,0,0.01)] overflow-hidden',
+	box: 'relative h-full w-full block text-2xl text-black border rounded-md bg-[rgba(0,0,0,0.01)] overflow-hidden',
 }
 
 export function Editor() {
 	const ref = useRef()
+	const rows = useBuilderStore((s) => s.rows)
 	useSelectionTracker(ref)
 	useMouseTracker(ref)
 
@@ -20,10 +22,9 @@ export function Editor() {
 			<div className={css.box} ref={ref}>
 				<GridPattern />
 
-				<Seat left='20px' top='20px' id='seat-1' />
-				<Seat left='80px' top='20px' id='seat-2' />
-				<Seat left='140px' top='60px' id='seat-3' />
-				<Seat left='200px' top='120px' id='seat-4' />
+				{rows.map((row) => (
+					<Row key={row.id} {...row} />
+				))}
 			</div>
 			<Selection />
 		</div>

@@ -20,7 +20,7 @@ export function GridLayout() {
 	}
 
 	return (
-		<Field label={__('settings.gridLayout')}>
+		<Field label={__('settings.gridLayout')} inline>
 			<RadioGroup value={gridLayout} defaultValue={GRID_LAYOUT.LINE} onChange={handleChange}>
 				<RadioChoice value={GRID_LAYOUT.NONE} isActive={gridLayout === GRID_LAYOUT.NONE}>
 					<svg

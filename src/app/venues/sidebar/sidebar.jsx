@@ -4,6 +4,7 @@ import { GridLayout } from './controls/grid-layout'
 import { GridOpacity } from './controls/grid-opacity'
 import { GridSize } from './controls/grid-size'
 import { SeatSize } from './controls/seat-size'
+import { SpaceBetweenSeats } from './controls/space-between-seats'
 
 const css = {
 	wrapper: 'h-full w-full pr-8 py-6 flex flex-col gap-y-8',
@@ -16,6 +17,7 @@ export function Sidebar() {
 		<div className={css.wrapper}>
 			<FieldGroup title={__('settings.seatHeadline')}>
 				<SeatSize />
+				<SpaceBetweenSeats />
 			</FieldGroup>
 
 			<FieldGroup title={__('settings.gridHeadline')}>
