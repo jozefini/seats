@@ -1,5 +1,5 @@
 import * as Slider from '@radix-ui/react-slider'
-import { useFieldContext } from '../hooks/field-context'
+import { useFieldContext } from '../context/field'
 
 const css = {
 	wrapper:

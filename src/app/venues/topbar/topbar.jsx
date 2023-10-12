@@ -12,7 +12,9 @@ export function Topbar() {
 
 	return (
 		<div className={css.wrapper}>
-			<h1 className={css.title}>{__('topbar.headline')}</h1>
+			<div className={css.leftSide}>
+				<h1 className={css.title}>{__('topbar.headline')}</h1>
+			</div>
 		</div>
 	)
 }

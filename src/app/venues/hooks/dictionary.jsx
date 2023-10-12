@@ -1,9 +1,9 @@
-import { useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import { deepAccess, getType, replacer } from '../utils/helpers'
-import { VenueContext } from '../context/venue'
+import { useVenueContext } from '../context/venue'
 
 export const useDictionary = () => {
-	const { dictionary } = useContext(VenueContext)
+	const { dictionary } = useVenueContext()
 	const __ = useCallback(
 		(textId, variables = {}) => {
 			const text = deepAccess(dictionary, textId, '(NaN)')

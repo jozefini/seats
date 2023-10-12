@@ -1,9 +1,15 @@
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 export const VenueContext = createContext({})
 
 export const VenueProvider = (props) => {
-	const { children, dictionary = {}, data = {} } = props
+	const { children, dictionary = {}, data = {}, context = 'create' } = props
 
-	return <VenueContext.Provider value={{ dictionary, data }}>{children}</VenueContext.Provider>
+	return (
+		<VenueContext.Provider value={{ dictionary, data, context }}>{children}</VenueContext.Provider>
+	)
+}
+
+export function useVenueContext() {
+	return useContext(VenueContext)
 }
