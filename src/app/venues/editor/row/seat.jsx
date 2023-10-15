@@ -6,7 +6,7 @@ import { classNames, getCurveOffset } from '../../utils/helpers'
 import { CURSOR_TYPES } from '../../utils/contants'
 
 const css = {
-	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mt-[var(--seat-offset)] select-none pointer-events-auto',
+	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mb-[var(--seat-offset)] select-none pointer-events-auto',
 	elDefault: 'bg-gradient-to-t from-gray-200 to-gray-100 border-gray-300 text-black/50',
 	elSelected: 'bg-gradient-to-t from-blue-300 to-blue-200 border-blue-500 text-blue-500',
 	elDraggable: 'hover:cursor-grab active:cursor-grabbing',
