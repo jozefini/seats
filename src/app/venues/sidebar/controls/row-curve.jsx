@@ -23,17 +23,17 @@ export function RowCurve() {
 			return { isHidden: true }
 		}
 
-		let sizes = new Set()
-		s.rows.forEach((row) => {
+		const sizes = new Set()
+		for (const row of s.rows) {
 			if (s.selectedRows.includes(row.id)) {
-				sizes.add(row.editor.curve)
+				sizes.add(row.editor.curve[0])
 			}
-		})
+		}
 
-		// If there are multiple sizes, we hide the control.
 		if (sizes.size > 1) {
 			return { hasDiffValues: true }
 		}
+
 		return { curveSize: sizes.values().next().value }
 	})
 
