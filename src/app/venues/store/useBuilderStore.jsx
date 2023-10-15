@@ -31,17 +31,16 @@ const createTestSeats = (rowId, seatsCount) => {
 }
 
 const initialStates = {
-	// Cursor.
+	// Editor.
 	cursor: CURSOR_TYPES.DEFAULT,
-
-	// Grid.
-	gridSize: 20, // in pixels
-	gridLayout: GRID_LAYOUT.NONE,
-	gridOpacity: 0.2,
+	isFocused: false,
 	editorY: 0,
 	editorX: 0,
 	editorWidth: 0,
 	editorHeight: 0,
+	gridSize: 20, // in pixels
+	gridLayout: GRID_LAYOUT.NONE,
+	gridOpacity: 0.2,
 
 	// Seats.
 	seatSize: 20, // in pixels
@@ -53,7 +52,6 @@ const initialStates = {
 
 	// Selection.
 	isSelecting: false,
-	isEditorFocused: false,
 	selectedSeats: [],
 	selectedRows: [],
 	startMouseY: 0,
@@ -63,7 +61,6 @@ const initialStates = {
 
 	// Dragging.
 	isDragging: false,
-	draggedRows: [],
 
 	// Rows data.
 	rows: [

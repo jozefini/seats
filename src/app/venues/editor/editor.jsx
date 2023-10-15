@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useMouseTracker } from '../hooks/mouse-tracker'
+import { useMouseTracker } from '../hooks/use-mouse-tracker'
 import { useEditorSelection } from '../hooks/use-editor-selection'
 import { useEditorDragging } from '../hooks/use-editor-dragging'
 import { useEditorShortcuts } from '../hooks/use-editor-shortcuts'

@@ -17,12 +17,12 @@ export function useEditorShortcuts(ref) {
 
 		const enableFocus = (e) => {
 			if (e.target === node || node.contains(e.target)) {
-				updateStates({ isEditorFocused: true })
+				updateStates({ isFocused: true })
 			}
 		}
 		const disableFocus = (e) => {
 			if (e.target === node || node.contains(e.target)) {
-				updateStates({ isEditorFocused: false })
+				updateStates({ isFocused: false })
 			}
 		}
 
@@ -43,7 +43,7 @@ export function useEditorShortcuts(ref) {
 	useEffect(() => {
 		const deleteRows = (e) => {
 			const { isFocused, selectedRows, updateStates } = getBuilderStore((s) => ({
-				isFocused: s.isEditorFocused,
+				isFocused: s.isFocused,
 				selectedRows: s.selectedRows,
 				updateStates: s.updateStates,
 			}))
@@ -69,7 +69,7 @@ export function useEditorShortcuts(ref) {
 		return () => {
 			window.removeEventListener('keydown', deleteRows)
 		}
-	}, [getBuilderStore])
+	}, [__, getBuilderStore])
 
 	/**
 	 * Select all rows
@@ -79,7 +79,7 @@ export function useEditorShortcuts(ref) {
 	useEffect(() => {
 		const selectAllRows = (e) => {
 			const { isFocused, rows, updateStates } = getBuilderStore((s) => ({
-				isFocused: s.isEditorFocused,
+				isFocused: s.isFocused,
 				rows: s.rows,
 				updateStates: s.updateStates,
 			}))
