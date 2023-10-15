@@ -1,10 +1,14 @@
 import { useDictionary } from '../hooks/dictionary'
+import { RedoButton } from '../ui/redo-button'
+import { UndoButton } from '../ui/undo-button'
 
 const css = {
 	wrapper:
 		'w-full flex flex-col items-start justify-between space-y-2 py-4 px-8 sm:flex-row sm:items-center sm:space-y-0 md:h-16',
 	title: 'text-lg font-semibold',
 	form: '',
+	leftSide: 'flex items-center gap-x-5',
+	actions: 'flex items-center gap-x-2',
 }
 
 export function Topbar() {
@@ -14,6 +18,10 @@ export function Topbar() {
 		<div className={css.wrapper}>
 			<div className={css.leftSide}>
 				<h1 className={css.title}>{__('topbar.headline')}</h1>
+				<div className={css.actions}>
+					<UndoButton />
+					<RedoButton />
+				</div>
 			</div>
 		</div>
 	)

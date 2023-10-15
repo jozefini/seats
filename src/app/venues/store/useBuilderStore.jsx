@@ -126,44 +126,46 @@ const builderStore = create(
 				const time = new Date().getTime()
 				const snapshot = JSON.stringify(draft.rows)
 
-				let newHistory = []
-
 				// If the history index is not the last one, we remove all the snapshots after the current index.
 				if (draft.historyIndex !== draft.history.length - 1) {
-					newHistory = draft.history.slice(0, draft.historyIndex + 1)
+					draft.history = draft.history.slice(0, draft.historyIndex + 1)
 				}
 
 				// We add the new snapshot to the history.
-				newHistory.push({ time, snapshot })
+				draft.history.push({ time, snapshot })
 
 				// We update the history, but we only keep the last 10 snapshots.
-				draft.history = newHistory.slice(-10)
+				draft.history = draft.history.slice(-10)
 				draft.historyIndex = draft.history.length - 1
 			})
 		},
 		undoChanges: () => {
 			set((draft) => {
+				console.log('undoChanges', draft.historyIndex, draft.history.length)
+
 				// If the history index is 0, we do nothing.
 				if (draft.historyIndex === 0) {
 					return false
 				}
 
 				// We update the history index.
-				draft.historyIndex--
+				const newIndex = draft.historyIndex - 1
+				draft.historyIndex = newIndex
 
 				// We update the rows.
-				draft.rows = JSON.parse(draft.history[draft.historyIndex].snapshot)
+				draft.rows = JSON.parse(draft.history[newIndex].snapshot)
 			})
 		},
 		redoChanges: () => {
 			set((draft) => {
+				console.log('redoChanges', draft.historyIndex, draft.history.length)
 				// If the history index is the last one, we do nothing.
 				if (draft.historyIndex === draft.history.length - 1) {
 					return false
 				}
 
 				// We update the history index.
-				draft.historyIndex++
+				draft.historyIndex = draft.historyIndex + 1
 
 				// We update the rows.
 				draft.rows = JSON.parse(draft.history[draft.historyIndex].snapshot)

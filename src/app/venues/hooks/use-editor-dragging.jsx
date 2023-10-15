@@ -8,7 +8,10 @@ export function useEditorDragging(ref) {
 	 */
 	useEffect(() => {
 		const node = ref.current
-		const updateStates = getBuilderStore((s) => s.updateStates)
+		const { updateStates, addSnapshot } = getBuilderStore((s) => ({
+			updateStates: s.updateStates,
+			addSnapshot: s.addSnapshot,
+		}))
 		let animationFrameId
 		let currentX = 0
 		let currentY = 0
@@ -35,12 +38,12 @@ export function useEditorDragging(ref) {
 		}
 
 		const handleDragMove = (e) => {
-			if (e.button !== 0) return // Only on left click
+			const isDragging = getBuilderStore((s) => s.isDragging)
+			if (e.button !== 0 || !isDragging) {
+				return // Only on left click and if the target is a seat
+			}
 
 			animationFrameId = requestAnimationFrame(() => {
-				const isDragging = getBuilderStore((s) => s.isDragging)
-				if (!isDragging) return
-
 				const deltaX = e.clientX - currentX
 				const deltaY = e.clientY - currentY
 
@@ -52,8 +55,12 @@ export function useEditorDragging(ref) {
 		}
 
 		const handleDragEnd = (e) => {
-			if (e.button !== 0) return // Only on left click
+			const isDragging = getBuilderStore((s) => s.isDragging)
+			if (e.button !== 0 || !isDragging) {
+				return // Only on left click and if the target is a seat
+			}
 
+			addSnapshot() // Add a snapshot to the history
 			updateStates({ isDragging: false })
 
 			if (animationFrameId) {
