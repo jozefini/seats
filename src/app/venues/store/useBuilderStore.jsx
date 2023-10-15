@@ -84,7 +84,7 @@ const initialStates = {
 }
 
 const builderStore = create(
-	immer((set) => ({
+	immer((set, get) => ({
 		...initialStates,
 		select: (rowId, seatId) => {
 			if (!rowId) return false
@@ -140,33 +140,26 @@ const builderStore = create(
 			})
 		},
 		undoChanges: () => {
+			const { historyIndex } = get()
+			if (historyIndex < 1) {
+				return false
+			}
 			set((draft) => {
-				console.log('undoChanges', draft.historyIndex, draft.history.length)
-
-				// If the history index is 0, we do nothing.
-				if (draft.historyIndex === 0) {
-					return false
-				}
-
 				// We update the history index.
-				const newIndex = draft.historyIndex - 1
-				draft.historyIndex = newIndex
-
+				draft.historyIndex = draft.historyIndex - 1
 				// We update the rows.
-				draft.rows = JSON.parse(draft.history[newIndex].snapshot)
+				draft.rows = JSON.parse(draft.history[draft.historyIndex].snapshot)
 			})
 		},
 		redoChanges: () => {
-			set((draft) => {
-				console.log('redoChanges', draft.historyIndex, draft.history.length)
-				// If the history index is the last one, we do nothing.
-				if (draft.historyIndex === draft.history.length - 1) {
-					return false
-				}
+			const { historyIndex, history } = get()
+			if (historyIndex >= history.length - 1) {
+				return false
+			}
 
+			set((draft) => {
 				// We update the history index.
 				draft.historyIndex = draft.historyIndex + 1
-
 				// We update the rows.
 				draft.rows = JSON.parse(draft.history[draft.historyIndex].snapshot)
 			})

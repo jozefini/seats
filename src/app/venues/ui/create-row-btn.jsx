@@ -8,23 +8,9 @@ const css = {
 	icon: 'w-5 h-5',
 }
 
-export function UndoButton() {
-	const { undoChanges, canUndo } = useBuilderStore((s) => ({
-		undoChanges: s.undoChanges,
-		canUndo: s.history.length > 0 && s.historyIndex > 0,
-	}))
-
-	const handleUndo = () => {
-		undoChanges()
-	}
-
+export function CreateRowBtn() {
 	return (
-		<button
-			type='button'
-			className={classNames(css.btn, canUndo ? css.btnDefault : css.btnDisabled)}
-			onClick={handleUndo}
-			disabled={!canUndo}
-		>
+		<button type='button' className={css.btn}>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				fill='none'
@@ -36,7 +22,7 @@ export function UndoButton() {
 				<path
 					strokeLinecap='round'
 					strokeLinejoin='round'
-					d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3'
+					d='M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 000 12h3'
 				/>
 			</svg>
 		</button>

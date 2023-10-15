@@ -36,6 +36,42 @@ export function useEditorShortcuts(ref) {
 	}, [ref, getBuilderStore])
 
 	/**
+	 * Undo / Redo.
+	 *
+	 * Pressing Ctrl+Z or Cmd+Z will undo the last action.
+	 * Pressing Ctrl+Shift+Z or Cmd+Shift+Z will redo the last action.
+	 */
+	useEffect(() => {
+		const undoRedo = (e) => {
+			const { isFocused, undo, redo } = getBuilderStore((s) => ({
+				isFocused: s.isFocused,
+				undo: s.undoChanges,
+				redo: s.redoChanges,
+			}))
+
+			const isUndo = (e.ctrlKey || e.metaKey) && e.key === 'z'
+			const isRedo = (e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'z'
+			if ((!isUndo && !isRedo) || !isFocused) {
+				return // Do nothing.
+			}
+
+			e.preventDefault()
+
+			// Undo or redo
+			if (isRedo) {
+				redo()
+			} else if (isUndo) {
+				undo()
+			}
+		}
+
+		window.addEventListener('keydown', undoRedo)
+		return () => {
+			window.removeEventListener('keydown', undoRedo)
+		}
+	}, [ref, getBuilderStore])
+
+	/**
 	 * Delete selected rows
 	 *
 	 * Pressing Delete or Backspace will delete all selected rows.

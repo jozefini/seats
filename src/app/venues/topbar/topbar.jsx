@@ -1,6 +1,6 @@
 import { useDictionary } from '../hooks/dictionary'
-import { RedoButton } from '../ui/redo-button'
-import { UndoButton } from '../ui/undo-button'
+import { RedoHistoryBtn } from '../ui/redo-history-btn'
+import { UndoHistoryBtn } from '../ui/undo-history-btn'
 
 const css = {
 	wrapper:
@@ -19,8 +19,8 @@ export function Topbar() {
 			<div className={css.leftSide}>
 				<h1 className={css.title}>{__('topbar.headline')}</h1>
 				<div className={css.actions}>
-					<UndoButton />
-					<RedoButton />
+					<UndoHistoryBtn />
+					<RedoHistoryBtn />
 				</div>
 			</div>
 		</div>

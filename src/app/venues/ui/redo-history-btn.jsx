@@ -8,7 +8,7 @@ const css = {
 	icon: 'w-5 h-5',
 }
 
-export function RedoButton() {
+export function RedoHistoryBtn() {
 	const { redoChanges, canRedo } = useBuilderStore((s) => ({
 		redoChanges: s.redoChanges,
 		canRedo: s.historyIndex < s.history.length - 1,
