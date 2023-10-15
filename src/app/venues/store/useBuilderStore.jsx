@@ -4,14 +4,6 @@ import { shallow } from 'zustand/shallow'
 import { CURSOR_TYPES, GRID_LAYOUT } from '../utils/contants'
 import { getType } from '../utils/helpers'
 
-const ACTIONS = {
-	ADD_ROW: 'ADD_ROW',
-	ADD_SEAT: 'ADD_SEAT',
-	REMOVE_ROW: 'REMOVE_ROW',
-	REMOVE_SEAT: 'REMOVE_SEAT',
-	DRAG_ROW: 'DRAG_ROW',
-}
-
 const createTestSeats = (rowId, seatsCount) => {
 	let seats = []
 	let number = 1
@@ -92,7 +84,7 @@ const initialStates = {
 }
 
 const builderStore = create(
-	immer((set, get) => ({
+	immer((set) => ({
 		...initialStates,
 		select: (rowId, seatId) => {
 			if (!rowId) return false
@@ -128,38 +120,22 @@ const builderStore = create(
 				}
 			})
 		},
-		dragSelectedRows: (x, y) => {
-			const { draggedRows } = get()
-			if (!draggedRows.length) return false
-
-			set((draft) => {
-				draggedRows.forEach(({ x: initX, y: initY, rowIndex }) => {
-					draft.rows[rowIndex].editor.x = initX + x
-					draft.rows[rowIndex].editor.y = initY + y
-				})
-			})
-		},
-		moveSelectedRows: (x, y) => {
-			if (!get().selectedRows.length) return false
-
-			set((draft) => {
-				draft.selectedRows.forEach((rowId) => {
-					const row = draft.rows.find((row) => row.id === rowId)
-					row.editor.x += x
-					row.editor.y += y
-				})
-			})
-		},
-		addToHistory: (action, data) => {
+		addToHistory: () => {
 			set((draft) => {
 				// We add the action to the history.
 				const time = new Date().getTime()
-				draft.history.push({ action, data, time })
+				const snapshot = JSON.stringify(draft.rows)
+				draft.history.push({ snapshot, time })
 
-				// If history index is not at the end, we remove all the actions after the current index but keep the last one.
+				// If history index is not at the end, we remove all the snapshots after the current index but keep the last one.
 				const historyEndIndex = draft.history.length - 1
 				if (draft.historyIndex < historyEndIndex) {
 					draft.history.splice(draft.historyIndex + 1, historyEndIndex - draft.historyIndex)
+				}
+
+				// Also keep the history length to 10.
+				if (draft.history.length > 10) {
+					draft.history.splice(0, draft.history.length - 10)
 				}
 
 				// We set the history index to the end.
@@ -167,23 +143,11 @@ const builderStore = create(
 			})
 		},
 		undoChanges: () => {
-			set((draft) => {
-				if (draft.historyIndex > -1) {
-					const { action, data } = draft.history[draft.historyIndex]
-
-					// Based on the action, we undo the changes.
-					switch (action) {
-						case ACTIONS.ADD_ROW:
-							draft.rows = draft.rows.filter((row) => row.id !== data.id)
-							break
-						default:
-							break
-					}
-					draft.historyIndex--
-				}
-			})
+			// Todo: Undo the changes.
 		},
-		redoChanges: () => {},
+		redoChanges: () => {
+			// Todo: Redo the changes.
+		},
 		updateStates: (states) =>
 			set((draft) => {
 				// If the states are not an object, do nothing.
