@@ -116,10 +116,11 @@ const builderStore = create(
 					const newSelectedSeats = draft.selectedSeats.filter(
 						(selectedSeatId) => selectedSeatId !== seatId,
 					)
-					draft.selectedSeats = newSelectedSeats
 
-					// After all seats are unselected, we remove the row from the selected rows.
-					if (!newSelectedSeats.length) {
+					draft.selectedSeats = newSelectedSeats
+					const rowSeatIds = draft.rows.find((row) => row.id === rowId).seats.map((seat) => seat.id)
+
+					if (!newSelectedSeats.some((_id) => rowSeatIds.includes(_id))) {
 						draft.selectedRows = draft.selectedRows.filter(
 							(selectedRowId) => selectedRowId !== rowId,
 						)

@@ -33,7 +33,6 @@ export function useEditorSelection(ref) {
 			if (e.target.classList.contains('venue-seat')) {
 				const { rowId } = e.target.dataset
 
-				newStates.isSelecting = false
 				newStates.selectedRows = getBuilderStore((s) =>
 					!s.selectedRows.includes(rowId) ? [rowId] : s.selectedRows,
 				)

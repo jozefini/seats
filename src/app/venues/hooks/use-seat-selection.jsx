@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useBuilderStore } from '../store/useBuilderStore'
 
-export function useSelectedElement({ rowId, seatId, isDisabled }) {
+export function useSeatSelection({ rowId, seatId, isDisabled }) {
 	const ref = useRef(null)
 	const { isSelected, select, unselect } = useBuilderStore((s) => ({
 		isSelected: s.selectedRows.includes(rowId),
@@ -41,9 +41,7 @@ export function useSelectedElement({ rowId, seatId, isDisabled }) {
 		} else {
 			unselect(rowId, seatId)
 		}
-
-		return () => !isDisabled && unselect(rowId, seatId)
-	}, [inSelection, isDisabled])
+	}, [inSelection, seatId, isDisabled])
 
 	return {
 		ref,

@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
-import { useSelectedElement } from '../../hooks/selected-element'
+import { useSeatSelection } from '../../hooks/use-seat-selection'
 import { useBuilderStore } from '../../store/useBuilderStore'
-import { classNames, getCurveOffset } from '../../utils/helpers'
 import { useRowContext } from '../../context/selection'
+import { classNames, getCurveOffset } from '../../utils/helpers'
 
 const css = {
 	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mt-[var(--seat-offset)] select-none pointer-events-auto hover:cursor-grab active:cursor-grabbing',
@@ -15,7 +15,7 @@ const css = {
 export function Seat({ index, number, id, type }) {
 	const { id: rowId, editor } = useRowContext()
 	const { curve } = editor
-	const { ref } = useSelectedElement({ rowId, seatId: id })
+	const { ref } = useSeatSelection({ rowId, seatId: id })
 	const { isSelected, totalSeats } = useBuilderStore((s) => ({
 		isSelected: s.selectedRows.includes(rowId),
 		totalSeats: s.rows.find((row) => row.id === rowId).seats.length,

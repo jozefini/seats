@@ -32,8 +32,8 @@ export function Editor() {
 						<Row key={row.id} {...row} />
 					))}
 				</div>
+				<Selection />
 			</div>
-			<Selection />
 		</div>
 	)
 }

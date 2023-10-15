@@ -41,13 +41,12 @@ export function Selection() {
 		return null
 	}
 
-	return createPortal(
+	return (
 		<div
 			className={css.selection}
 			style={{
 				...styles,
 			}}
-		/>,
-		document.body,
+		/>
 	)
 }
