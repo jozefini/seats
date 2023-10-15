@@ -5,9 +5,9 @@ import { classNames, getCurveOffset } from '../../utils/helpers'
 import { useRowContext } from '../../context/selection'
 
 const css = {
-	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mt-[var(--seat-offset)] select-none hover:cursor-move',
+	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mt-[var(--seat-offset)] select-none pointer-events-auto',
 	elDefault: 'bg-gray-200 border-gray-300 text-black/50',
-	elSelected: 'bg-blue-300 border-blue-500 text-blue-500',
+	elSelected: 'bg-blue-300 border-blue-500 text-blue-500 hover:cursor-grab active:cursor-grabbing ',
 	emptySeat: 'invisible opacity-0 pointer-events-none',
 	number: 'absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none',
 }

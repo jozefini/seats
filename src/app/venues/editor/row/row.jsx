@@ -5,9 +5,10 @@ import { Seat } from './seat'
 
 const css = {
 	wrapper:
-		'flex items-start absolute left-0 top-0 text-[calc(var(--seat-size)/2)] gap-[var(--row-gap)] translate-x-[var(--row-x)] translate-y-[var(--row-y)]',
-	normalRow: 'flex-row',
-	reversedRow: 'flex-row-reverse',
+		'absolute left-0 top-0 text-[calc(var(--seat-size)/2)] translate-x-[var(--row-x)] translate-y-[var(--row-y)] pointer-events-none',
+	seats: 'flex items-start gap-[var(--row-gap)]',
+	seatsDefault: 'flex-row',
+	seatsReversed: 'flex-row-reverse',
 }
 
 export function Row(props) {
@@ -21,7 +22,7 @@ export function Row(props) {
 	return (
 		<RowProvider {...props}>
 			<div
-				className={classNames(css.wrapper, reversed ? css.reversedRow : css.normalRow)}
+				className={css.wrapper}
 				style={{
 					'--seat-size': `${seatSize / 16}rem`,
 					'--row-gap': `${spaceBetweenSeats / 16}rem`,
@@ -29,9 +30,11 @@ export function Row(props) {
 					'--row-y': `${y}px`,
 				}}
 			>
-				{seats.map((seat, index) => (
-					<Seat key={seat.id} index={index} {...seat} />
-				))}
+				<div className={classNames(css.seats, reversed ? css.seatsReversed : css.seatsDefault)}>
+					{seats.map((seat, index) => (
+						<Seat key={seat.id} index={index} {...seat} />
+					))}
+				</div>
 			</div>
 		</RowProvider>
 	)

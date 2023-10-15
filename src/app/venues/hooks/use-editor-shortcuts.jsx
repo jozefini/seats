@@ -53,14 +53,13 @@ export function useEditorShortcuts() {
 				rows: s.rows,
 				updateStates: s.updateStates,
 			}))
-			l
 
 			const isSelectAll = (e.ctrlKey || e.metaKey) && e.key === 'a'
 			if (!isSelectAll || !isFocused) {
 				return // Do nothing.
 			}
 
-			e.preventDefaut()
+			e.preventDefault()
 
 			// Select all rows
 			updateStates({ selectedRows: rows.map((row) => row.id) })

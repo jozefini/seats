@@ -25,7 +25,7 @@ export function useSelectionTracker(ref) {
 			if (e.target.classList.contains('venue-seat')) {
 				const { rowId } = e.target.dataset
 				const { hasSelection, draggedRows, selectedRows } = getBuilderStore((s) => {
-					const selectedRows = !s.selectedRows.length ? [rowId] : s.selectedRows
+					const selectedRows = !s.selectedRows.includes(rowId) ? [rowId] : s.selectedRows
 					const hasSelection = selectedRows.includes(rowId)
 					const draggedRows = []
 

@@ -51,7 +51,7 @@ export function RowCurve() {
 					value={curveSize}
 					min={0}
 					step={1}
-					max={40}
+					max={100}
 					onChange={updateRowCurve}
 				/>
 			)}

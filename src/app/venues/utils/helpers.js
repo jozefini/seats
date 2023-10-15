@@ -55,7 +55,7 @@ export function replacer(text, pattern = {}) {
  */
 export function getCurveOffset(current, total, maxOffset = 20) {
 	const middle = total / 2
-	const ratio = Math.abs(middle - current) / middle
+	const ratio = Math.pow(Math.abs(middle - current) / middle, 1.25)
 	const offset = maxOffset * Math.cos((ratio * Math.PI) / 2)
 	return Math.round(offset * 100) / 100
 }
