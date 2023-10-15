@@ -3,7 +3,9 @@
 		"headline": "Create Venue"
 	},
 	"actions": {
-		"save": "Save"
+		"save": "Save",
+		"createRow": "Create Row",
+		"cancelRow": "Cancel Row"
 	},
 	"settings": {
 		"seatHeadline": "Seat Settings",

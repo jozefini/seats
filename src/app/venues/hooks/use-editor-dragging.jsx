@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { getBuilderStore } from '../store/useBuilderStore'
+import { getBuilderStore, useBuilderStore } from '../store/useBuilderStore'
 import { getUpdatedRowsCoords } from '../utils/helpers'
+import { CURSOR_TYPES } from '../utils/contants'
 
 export function useEditorDragging(ref) {
 	/**
@@ -17,8 +18,9 @@ export function useEditorDragging(ref) {
 		let currentY = 0
 
 		const handleDragStart = (e) => {
+			const isDefaultCursor = getBuilderStore((s) => s.cursor) === CURSOR_TYPES.DEFAULT
 			const isSelectingASeat = e.target.classList.contains('venue-seat')
-			if (e.button !== 0 || !isSelectingASeat) {
+			if (e.button !== 0 || !isSelectingASeat || !isDefaultCursor) {
 				return // Only on left click and if the target is a seat
 			}
 
@@ -38,8 +40,11 @@ export function useEditorDragging(ref) {
 		}
 
 		const handleDragMove = (e) => {
-			const isDragging = getBuilderStore((s) => s.isDragging)
-			if (e.button !== 0 || !isDragging) {
+			const { isDragging, isDefaultCursor } = getBuilderStore((s) => ({
+				isDragging: s.isDragging,
+				isDefaultCursor: s.cursor === CURSOR_TYPES.DEFAULT,
+			}))
+			if (e.button !== 0 || !isDragging || !isDefaultCursor) {
 				return // Only on left click and if the target is a seat
 			}
 
@@ -55,8 +60,11 @@ export function useEditorDragging(ref) {
 		}
 
 		const handleDragEnd = (e) => {
-			const isDragging = getBuilderStore((s) => s.isDragging)
-			if (e.button !== 0 || !isDragging) {
+			const { isDragging, isDefaultCursor } = getBuilderStore((s) => ({
+				isDragging: s.isDragging,
+				isDefaultCursor: s.cursor === CURSOR_TYPES.DEFAULT,
+			}))
+			if (e.button !== 0 || !isDragging || !isDefaultCursor) {
 				return // Only on left click and if the target is a seat
 			}
 
@@ -97,9 +105,14 @@ export function useEditorDragging(ref) {
 	useEffect(() => {
 		// Add on arrow keys, move 1px, if shift is pressed, move 10px.
 		const handleKeyDown = (e) => {
-			if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return
+			if (
+				!getBuilderStore((s) => s.cursor === CURSOR_TYPES.DEFAULT) ||
+				!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
+			) {
+				return // Only if the cursor is default and if the key is an arrow key.
+			}
 
-			const { rows, selectedRows, updateStates } = getBuilderStore((s) => ({
+			const { selectedRows, updateStates } = getBuilderStore((s) => ({
 				rows: s.rows,
 				selectedRows: s.selectedRows,
 				updateStates: s.updateStates,

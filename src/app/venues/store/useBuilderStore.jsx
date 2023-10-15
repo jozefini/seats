@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
-import { CURSOR_TYPES, GRID_LAYOUT } from '../utils/contants'
+import { CURSOR_TYPES } from '../utils/contants'
 import { getType } from '../utils/helpers'
 
 const createTestSeats = (rowId, seatsCount) => {
@@ -30,9 +30,6 @@ const initialStates = {
 	editorX: 0,
 	editorWidth: 0,
 	editorHeight: 0,
-	gridSize: 20, // in pixels
-	gridLayout: GRID_LAYOUT.NONE,
-	gridOpacity: 0.2,
 
 	// Seats.
 	seatSize: 20, // in pixels

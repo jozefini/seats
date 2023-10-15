@@ -1,10 +1,11 @@
 import { useDictionary } from '../hooks/dictionary'
+import { CreateRowBtn } from '../ui/create-row-btn'
 import { RedoHistoryBtn } from '../ui/redo-history-btn'
 import { UndoHistoryBtn } from '../ui/undo-history-btn'
 
 const css = {
 	wrapper:
-		'w-full flex flex-col items-start justify-between space-y-2 py-4 px-8 sm:flex-row sm:items-center sm:space-y-0 md:h-16',
+		'w-full bg-gray-50 rounded-[inherit] flex flex-col items-start justify-between space-y-2 py-4 px-8 sm:flex-row sm:items-center sm:space-y-0 md:h-16',
 	title: 'text-lg font-semibold',
 	form: '',
 	leftSide: 'flex items-center gap-x-5',
@@ -21,6 +22,7 @@ export function Topbar() {
 				<div className={css.actions}>
 					<UndoHistoryBtn />
 					<RedoHistoryBtn />
+					<CreateRowBtn />
 				</div>
 			</div>
 		</div>

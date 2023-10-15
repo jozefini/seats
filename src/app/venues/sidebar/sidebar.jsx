@@ -1,8 +1,5 @@
 import { useDictionary } from '../hooks/dictionary'
 import { FieldGroup } from '../ui/field-group'
-import { GridLayout } from './controls/grid-layout'
-import { GridOpacity } from './controls/grid-opacity'
-import { GridSize } from './controls/grid-size'
 import { RowCurve } from './controls/row-curve'
 import { SeatSize } from './controls/seat-size'
 import { SpaceBetweenSeats } from './controls/space-between-seats'
@@ -20,12 +17,6 @@ export function Sidebar() {
 				<SeatSize />
 				<RowCurve />
 				<SpaceBetweenSeats />
-			</FieldGroup>
-
-			<FieldGroup title={__('settings.gridHeadline')}>
-				<GridLayout />
-				<GridSize />
-				<GridOpacity />
 			</FieldGroup>
 		</div>
 	)

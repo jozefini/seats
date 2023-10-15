@@ -5,7 +5,7 @@ import { Seat } from './seat'
 
 const css = {
 	wrapper:
-		'absolute left-0 top-0 text-[calc(var(--seat-size)/2)] translate-x-[var(--row-x)] translate-y-[var(--row-y)] pointer-events-none',
+		'absolute left-0 top-0 text-[calc(var(--seat-size)/2)] transform-gpu translate-x-[var(--row-x)] translate-y-[var(--row-y)] pointer-events-none',
 	wrapperSelected: 'z-10',
 	seats: 'flex items-start gap-[var(--row-gap)]',
 	seatsDefault: 'flex-row',

@@ -3,11 +3,13 @@ import { useSeatSelection } from '../../hooks/use-seat-selection'
 import { useBuilderStore } from '../../store/useBuilderStore'
 import { useRowContext } from '../../context/selection'
 import { classNames, getCurveOffset } from '../../utils/helpers'
+import { CURSOR_TYPES } from '../../utils/contants'
 
 const css = {
-	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mt-[var(--seat-offset)] select-none pointer-events-auto hover:cursor-grab active:cursor-grabbing',
-	elDefault: 'bg-gray-200 border-gray-300 text-black/50',
-	elSelected: 'bg-blue-300 border-blue-500 text-blue-500',
+	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mt-[var(--seat-offset)] select-none pointer-events-auto',
+	elDefault: 'bg-gradient-to-t from-gray-200 to-gray-100 border-gray-300 text-black/50',
+	elSelected: 'bg-gradient-to-t from-blue-300 to-blue-200 border-blue-500 text-blue-500',
+	elDraggable: 'hover:cursor-grab active:cursor-grabbing',
 	emptySeat: 'invisible opacity-0 pointer-events-none',
 	number: 'absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none',
 }
@@ -16,7 +18,8 @@ export function Seat({ index, number, id, type }) {
 	const { id: rowId, editor } = useRowContext()
 	const { curve } = editor
 	const { ref } = useSeatSelection({ rowId, seatId: id })
-	const { isSelected, totalSeats } = useBuilderStore((s) => ({
+	const { isDraggable, isSelected, totalSeats } = useBuilderStore((s) => ({
+		isDraggable: s.cursor === CURSOR_TYPES.DEFAULT,
 		isSelected: s.selectedRows.includes(rowId),
 		totalSeats: s.rows.find((row) => row.id === rowId).seats.length,
 	}))
@@ -34,6 +37,7 @@ export function Seat({ index, number, id, type }) {
 			className={classNames(
 				css.el,
 				isSelected ? css.elSelected : css.elDefault,
+				isDraggable && css.elDraggable,
 				'empty' === type && css.emptySeat,
 			)}
 			style={{

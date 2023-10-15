@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { getBuilderStore } from '../store/useBuilderStore'
+import { CURSOR_TYPES } from '../utils/contants'
 
 export function useEditorSelection(ref) {
 	useEffect(() => {
@@ -19,7 +20,9 @@ export function useEditorSelection(ref) {
 		})
 
 		const handleMouseDown = (e) => {
-			if (e.button !== 0) return // Only on left click
+			if (e.button !== 0 || getBuilderStore((s) => s.cursor) !== CURSOR_TYPES.DEFAULT) {
+				return // Only on left click and if the cursor is default
+			}
 
 			let newStates = {
 				isSelecting: true,
@@ -43,7 +46,9 @@ export function useEditorSelection(ref) {
 		}
 
 		const handleMouseMove = (e) => {
-			if (e.button !== 0) return // Only on left click
+			if (e.button !== 0 || getBuilderStore((s) => s.cursor) !== CURSOR_TYPES.DEFAULT) {
+				return // Only on left click and if the cursor is default
+			}
 
 			animationFrameId = requestAnimationFrame(() => {
 				updateStates({ endMouseX: e.clientX, endMouseY: e.clientY })
@@ -51,7 +56,9 @@ export function useEditorSelection(ref) {
 		}
 
 		const handleMouseUp = (e) => {
-			if (e.button !== 0) return // Only on left click
+			if (e.button !== 0 || getBuilderStore((s) => s.cursor) !== CURSOR_TYPES.DEFAULT) {
+				return // Only on left click and if the cursor is default
+			}
 
 			updateStates({ isSelecting: false })
 			if (animationFrameId) {
