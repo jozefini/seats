@@ -18,7 +18,7 @@ export function RowCurve() {
 		})
 		s.updateStates({ rows: newRows })
 	})
-	const { isHidden, hasDiffValues, curveSize } = useBuilderStore((s) => {
+	const { isHidden, hasDiffValues, curveSize, allValues } = useBuilderStore((s) => {
 		if (!s.selectedRows.length) {
 			return { isHidden: true }
 		}
@@ -31,7 +31,7 @@ export function RowCurve() {
 		}
 
 		if (sizes.size > 1) {
-			return { hasDiffValues: true }
+			return { hasDiffValues: true, allValues: [...sizes] }
 		}
 
 		return { curveSize: [sizes.values().next().value] }
@@ -44,7 +44,16 @@ export function RowCurve() {
 	return (
 		<Field label={__('settings.rowCurve')}>
 			{hasDiffValues ? (
-				<div className={css.notice}>{__('settings.rowCurveDiffValues')}</div>
+				<div className={css.notice}>
+					{__('settings.rowCurveDiffValues')}
+					<div>
+						{allValues.map((value) => (
+							<button key={value} className='px-1' onClick={() => updateRowCurve([value])}>
+								{value}
+							</button>
+						))}
+					</div>
+				</div>
 			) : (
 				<RangeSlider
 					defaultValue={curveSize}

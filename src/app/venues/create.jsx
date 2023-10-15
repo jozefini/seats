@@ -4,6 +4,8 @@ import { Sidebar } from './sidebar'
 import { Topbar } from './topbar'
 import dictionary from './i18n/create.json'
 
+import './styles.css'
+
 const css = {
 	wrapper: 'max-w-[90rem] w-full mx-auto px-4',
 	box: 'rounded-[0.5rem] border bg-white shadow',

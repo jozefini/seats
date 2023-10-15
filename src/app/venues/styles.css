@@ -1,0 +1,5 @@
+.no-input-arrows::-webkit-inner-spin-button,
+.no-input-arrows::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
