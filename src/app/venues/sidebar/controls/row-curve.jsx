@@ -58,7 +58,7 @@ export function RowCurve() {
 				<RangeSlider
 					defaultValue={curveSize}
 					value={curveSize}
-					min={0}
+					min={-100}
 					step={1}
 					max={100}
 					onChange={updateRowCurve}

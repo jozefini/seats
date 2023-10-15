@@ -12,7 +12,7 @@ const css = {
 		'block h-4 w-4 rounded-full border border-black/50 bg-white shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 disabled:pointer-events-none disabled:opacity-50',
 	inputBox: 'w-16',
 	input:
-		'no-input-arrows w-full h-8 text-center rounded-md border border-black/10 p-1 text-sm font-semibold text-black/50',
+		'no-input-arrows w-full h-6 text-center rounded-md border border-black/10 p-1 text-sm font-semibold text-black/50',
 }
 
 export function RangeSlider({ className, min, max, step, value, defaultValue, onChange }) {

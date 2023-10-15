@@ -120,33 +120,54 @@ const builderStore = create(
 				}
 			})
 		},
-		addToHistory: () => {
+		addSnapshot: () => {
 			set((draft) => {
 				// We add the action to the history.
 				const time = new Date().getTime()
 				const snapshot = JSON.stringify(draft.rows)
-				draft.history.push({ snapshot, time })
 
-				// If history index is not at the end, we remove all the snapshots after the current index but keep the last one.
-				const historyEndIndex = draft.history.length - 1
-				if (draft.historyIndex < historyEndIndex) {
-					draft.history.splice(draft.historyIndex + 1, historyEndIndex - draft.historyIndex)
+				let newHistory = []
+
+				// If the history index is not the last one, we remove all the snapshots after the current index.
+				if (draft.historyIndex !== draft.history.length - 1) {
+					newHistory = draft.history.slice(0, draft.historyIndex + 1)
 				}
 
-				// Also keep the history length to 10.
-				if (draft.history.length > 10) {
-					draft.history.splice(0, draft.history.length - 10)
-				}
+				// We add the new snapshot to the history.
+				newHistory.push({ time, snapshot })
 
-				// We set the history index to the end.
-				draft.historyIndex = historyEndIndex
+				// We update the history, but we only keep the last 10 snapshots.
+				draft.history = newHistory.slice(-10)
+				draft.historyIndex = draft.history.length - 1
 			})
 		},
 		undoChanges: () => {
-			// Todo: Undo the changes.
+			set((draft) => {
+				// If the history index is 0, we do nothing.
+				if (draft.historyIndex === 0) {
+					return false
+				}
+
+				// We update the history index.
+				draft.historyIndex--
+
+				// We update the rows.
+				draft.rows = JSON.parse(draft.history[draft.historyIndex].snapshot)
+			})
 		},
 		redoChanges: () => {
-			// Todo: Redo the changes.
+			set((draft) => {
+				// If the history index is the last one, we do nothing.
+				if (draft.historyIndex === draft.history.length - 1) {
+					return false
+				}
+
+				// We update the history index.
+				draft.historyIndex++
+
+				// We update the rows.
+				draft.rows = JSON.parse(draft.history[draft.historyIndex].snapshot)
+			})
 		},
 		updateStates: (states) =>
 			set((draft) => {
