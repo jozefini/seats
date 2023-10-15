@@ -1,4 +1,5 @@
 import { useBuilderStore } from '../store/useBuilderStore'
+import { createPortal } from 'react-dom'
 
 const css = {
 	selection: 'border border-blue-500 bg-blue-200 opacity-50 fixed',
@@ -40,5 +41,13 @@ export function Selection() {
 		return null
 	}
 
-	return <div className={css.selection} style={styles} />
+	return createPortal(
+		<div
+			className={css.selection}
+			style={{
+				...styles,
+			}}
+		/>,
+		document.body,
+	)
 }
