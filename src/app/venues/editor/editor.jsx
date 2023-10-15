@@ -7,10 +7,11 @@ import { useBuilderStore } from '../store/useBuilderStore'
 import { GridPattern } from './grid-pattern'
 import { Selection } from './selection'
 import { Row } from './row'
+import { useRowsDragging } from '../hooks/use-rows-dragging'
 
 const css = {
 	wrapper: 'h-full w-full pl-8 py-6 max-w-full overflow-auto',
-	box: 'relative h-full w-full block text-2xl text-black border rounded-md bg-[rgba(0,0,0,0.01)] overflow-hidden',
+	box: 'relative h-full w-full block text-2xl text-black border rounded-md bg-[rgba(0,0,0,0.01)] overflow-hidden outline-none',
 }
 
 export function Editor() {
@@ -20,10 +21,11 @@ export function Editor() {
 	useMouseTracker(ref)
 	useDraggingTracker(ref)
 	useKeyboardTracker(ref)
+	useRowsDragging(ref)
 
 	return (
 		<div className={css.wrapper}>
-			<div className={css.box} ref={ref}>
+			<div className={css.box} ref={ref} tabIndex={0}>
 				<GridPattern />
 
 				{rows.map((row) => (
