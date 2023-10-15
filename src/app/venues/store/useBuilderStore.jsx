@@ -36,7 +36,7 @@ const initialStates = {
 
 	// Grid.
 	gridSize: 10, // in pixels
-	gridLayout: GRID_LAYOUT.DOT,
+	gridLayout: GRID_LAYOUT.NONE,
 	gridOpacity: 0.2,
 	editorY: 0,
 	editorX: 0,

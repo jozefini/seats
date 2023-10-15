@@ -15,5 +15,8 @@
 		"gridOpacity": "Opacity",
 		"rowCurve": "Row Curve",
 		"rowCurveDiffValues": "Selected rows have different curve values"
+	},
+	"prompt": {
+		"deleteRows": "Are you sure you want to delete the selected rows?"
 	}
 }

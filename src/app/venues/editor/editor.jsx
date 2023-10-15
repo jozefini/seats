@@ -8,6 +8,7 @@ import { GridPattern } from './grid-pattern'
 import { Selection } from './selection'
 import { Row } from './row'
 import { useRowsDragging } from '../hooks/use-rows-dragging'
+import { useEditorShortcuts } from '../hooks/use-editor-shortcuts'
 
 const css = {
 	wrapper: 'h-full w-full pl-8 py-6 max-w-full overflow-auto',
@@ -22,6 +23,7 @@ export function Editor() {
 	useDraggingTracker(ref)
 	useKeyboardTracker(ref)
 	useRowsDragging(ref)
+	useEditorShortcuts(ref)
 
 	return (
 		<div className={css.wrapper}>
