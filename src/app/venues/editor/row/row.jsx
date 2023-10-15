@@ -26,8 +26,8 @@ export function Row(props) {
 			<div
 				className={classNames(css.wrapper, isSelected && css.wrapperSelected)}
 				style={{
-					'--seat-size': `${seatSize / 16}rem`,
-					'--row-gap': `${spaceBetweenSeats / 16}rem`,
+					'--seat-size': `${seatSize}px`,
+					'--row-gap': `${spaceBetweenSeats}px`,
 					'--row-x': `${x}px`,
 					'--row-y': `${y}px`,
 				}}

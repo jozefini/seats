@@ -83,11 +83,17 @@ export function getUpdatedRowsCoords(x, y) {
 		if (!selectedRows.includes(row.id)) {
 			return
 		}
-		if (row.editor.x + x < 0) {
-			lockX = true
+		if (!lockX) {
+			const newX = row.editor.x + x
+			if (newX < 0) {
+				lockX = true
+			}
 		}
-		if (row.editor.y + y < 0) {
-			lockY = true
+		if (!lockY) {
+			const newY = row.editor.y + y
+			if (newY < 0) {
+				lockY = true
+			}
 		}
 	})
 
