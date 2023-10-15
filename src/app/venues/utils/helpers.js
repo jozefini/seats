@@ -77,8 +77,19 @@ export function getUpdatedRowsCoords(x, y) {
 	}))
 
 	// Block negative positions on left and top.
-	let blockY = false
-	let blockX = false
+	let lockY = false
+	let lockX = false
+	rows.forEach((row) => {
+		if (!selectedRows.includes(row.id)) {
+			return
+		}
+		if (row.editor.x + x < 0) {
+			lockX = true
+		}
+		if (row.editor.y + y < 0) {
+			lockY = true
+		}
+	})
 
 	// Calculate the new position of the rows.
 	const newRows = rows.map((row) => {
@@ -86,29 +97,12 @@ export function getUpdatedRowsCoords(x, y) {
 			return row
 		}
 
-		// Get the difference between the current position and the new position.
-		// If new position is negative, block it.
-		let newX = blockX ? row.editor.x : row.editor.x + x
-		let newY = blockY ? row.editor.y : row.editor.y + y
-
-		// Block negative positions on left.
-		if (newX < 0) {
-			newX = 0
-			blockX = true
-		}
-
-		// Block negative positions on top.
-		if (newY < 0) {
-			newY = 0
-			blockY = true
-		}
-
 		return {
 			...row,
 			editor: {
 				...row.editor,
-				x: newX,
-				y: newY,
+				x: lockX ? row.editor.x : row.editor.x + x,
+				y: lockY ? row.editor.y : row.editor.y + y,
 			},
 		}
 	})
