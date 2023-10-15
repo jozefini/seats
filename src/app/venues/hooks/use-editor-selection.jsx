@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
-import { getBuilderStore, useBuilderStore } from '../store/useBuilderStore'
+import { getBuilderStore } from '../store/useBuilderStore'
 
-export function useSelectionTracker(ref) {
-	const updateStates = useBuilderStore((s) => s.updateStates)
-
+export function useEditorSelection(ref) {
 	useEffect(() => {
 		const node = ref.current
 		if (!node) return // If the node is not available, do nothing.
 
 		let animationFrameId
+		const updateStates = getBuilderStore((s) => s.updateStates)
 
 		// Set editor coordinates.
 		const editorRect = node.getBoundingClientRect()
@@ -22,58 +21,25 @@ export function useSelectionTracker(ref) {
 		const handleMouseDown = (e) => {
 			if (e.button !== 0) return // Only on left click
 
-			if (e.target.classList.contains('venue-seat')) {
-				const { rowId } = e.target.dataset
-				const { hasSelection, draggedRows, selectedRows } = getBuilderStore((s) => {
-					const selectedRows = !s.selectedRows.includes(rowId) ? [rowId] : s.selectedRows
-					const hasSelection = selectedRows.includes(rowId)
-					const draggedRows = []
-
-					if (hasSelection) {
-						s.rows.forEach((row, i) => {
-							if (selectedRows.includes(row.id)) {
-								draggedRows.push({
-									rowIndex: i,
-									x: row.editor.x,
-									y: row.editor.y,
-								})
-							}
-						})
-					}
-
-					return { hasSelection, draggedRows, selectedRows }
-				})
-
-				if (hasSelection) {
-					updateStates({
-						isDragging: true,
-						draggedRows,
-						selectedRows,
-						startMouseX: e.clientX,
-						startMouseY: e.clientY,
-					})
-					return // If the target is a seat, do nothing.
-				}
-			}
-
-			updateStates({
-				isDragging: false,
-				draggedRows: [],
+			let newStates = {
 				isSelecting: true,
 				startMouseX: e.clientX,
 				startMouseY: e.clientY,
 				selectedRows: [],
 				selectedSeats: [],
-			})
-		}
-
-		const handleMouseUp = (e) => {
-			if (e.button !== 0) return // Only on left click
-
-			updateStates({ isSelecting: false, isDragging: false, draggedRows: [] })
-			if (animationFrameId) {
-				cancelAnimationFrame(animationFrameId)
 			}
+
+			// If the target is a seat, select it.
+			if (e.target.classList.contains('venue-seat')) {
+				const { rowId } = e.target.dataset
+
+				newStates.isSelecting = false
+				newStates.selectedRows = getBuilderStore((s) =>
+					!s.selectedRows.includes(rowId) ? [rowId] : s.selectedRows,
+				)
+			}
+
+			updateStates(newStates)
 		}
 
 		const handleMouseMove = (e) => {
@@ -82,6 +48,15 @@ export function useSelectionTracker(ref) {
 			animationFrameId = requestAnimationFrame(() => {
 				updateStates({ endMouseX: e.clientX, endMouseY: e.clientY })
 			})
+		}
+
+		const handleMouseUp = (e) => {
+			if (e.button !== 0) return // Only on left click
+
+			updateStates({ isSelecting: false })
+			if (animationFrameId) {
+				cancelAnimationFrame(animationFrameId)
+			}
 		}
 
 		if (window && node) {
@@ -103,5 +78,5 @@ export function useSelectionTracker(ref) {
 				cancelAnimationFrame(animationFrameId)
 			}
 		}
-	}, [])
+	}, [ref, getBuilderStore])
 }

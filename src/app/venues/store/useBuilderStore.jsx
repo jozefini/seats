@@ -35,7 +35,7 @@ const initialStates = {
 	cursor: CURSOR_TYPES.DEFAULT,
 
 	// Grid.
-	gridSize: 10, // in pixels
+	gridSize: 20, // in pixels
 	gridLayout: GRID_LAYOUT.NONE,
 	gridOpacity: 0.2,
 	editorY: 0,
@@ -44,7 +44,7 @@ const initialStates = {
 	editorHeight: 0,
 
 	// Seats.
-	seatSize: 10, // in pixels
+	seatSize: 20, // in pixels
 	spaceBetweenSeats: 2, // in pixels
 
 	// Tracking.
@@ -72,7 +72,7 @@ const initialStates = {
 			label: 'Row 1',
 			price: 0,
 			defaultPrice: 0,
-			editor: { x: 10, y: 20, curve: 0 },
+			editor: { x: 10, y: 10, curve: 0 },
 			reversed: false,
 			beginWithSeatNumber: 1,
 			seats: createTestSeats('a-1', 40),
@@ -82,7 +82,7 @@ const initialStates = {
 			label: 'Row 2',
 			price: 0,
 			defaultPrice: 0,
-			editor: { x: 10, y: 20, curve: 0 },
+			editor: { x: 10, y: 50, curve: 20 },
 			reversed: false,
 			beginWithSeatNumber: 1,
 			seats: createTestSeats('b-1', 40),

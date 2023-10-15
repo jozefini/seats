@@ -14,7 +14,7 @@ export function RowCurve() {
 			if (!s.selectedRows.includes(row.id)) {
 				return row
 			}
-			return { ...row, editor: { ...row.editor, curve: value } }
+			return { ...row, editor: { ...row.editor, curve: value[0] } }
 		})
 		s.updateStates({ rows: newRows })
 	})
@@ -26,7 +26,7 @@ export function RowCurve() {
 		const sizes = new Set()
 		for (const row of s.rows) {
 			if (s.selectedRows.includes(row.id)) {
-				sizes.add(row.editor.curve[0])
+				sizes.add(row.editor.curve)
 			}
 		}
 
@@ -34,7 +34,7 @@ export function RowCurve() {
 			return { hasDiffValues: true }
 		}
 
-		return { curveSize: sizes.values().next().value }
+		return { curveSize: [sizes.values().next().value] }
 	})
 
 	if (isHidden) {

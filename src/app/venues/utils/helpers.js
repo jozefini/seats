@@ -1,3 +1,5 @@
+import { getBuilderStore } from '../store/useBuilderStore'
+
 /**
  * Join valid class names.
  *
@@ -58,6 +60,60 @@ export function getCurveOffset(current, total, maxOffset = 20) {
 	const ratio = Math.pow(Math.abs(middle - current) / middle, 1.25)
 	const offset = maxOffset * Math.cos((ratio * Math.PI) / 2)
 	return Math.round(offset * 100) / 100
+}
+
+/**
+ * Get the new rows coordinates.
+ *
+ * @param {number} x - The x position.
+ * @param {number} y - The y position.
+ * @param {object[]} draggedRows - The dragged rows.
+ * @returns {object[]} - The new rows.
+ */
+export function getUpdatedRowsCoords(x, y) {
+	const { rows, selectedRows } = getBuilderStore((s) => ({
+		rows: s.rows,
+		selectedRows: s.selectedRows,
+	}))
+
+	// Block negative positions on left and top.
+	let blockY = false
+	let blockX = false
+
+	// Calculate the new position of the rows.
+	const newRows = rows.map((row) => {
+		if (!selectedRows.includes(row.id)) {
+			return row
+		}
+
+		// Get the difference between the current position and the new position.
+		// If new position is negative, block it.
+		let newX = blockX ? row.editor.x : row.editor.x + x
+		let newY = blockY ? row.editor.y : row.editor.y + y
+
+		// Block negative positions on left.
+		if (newX < 0) {
+			newX = 0
+			blockX = true
+		}
+
+		// Block negative positions on top.
+		if (newY < 0) {
+			newY = 0
+			blockY = true
+		}
+
+		return {
+			...row,
+			editor: {
+				...row.editor,
+				x: newX,
+				y: newY,
+			},
+		}
+	})
+
+	return newRows
 }
 
 /**
