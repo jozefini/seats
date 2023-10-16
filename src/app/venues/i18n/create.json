@@ -4,8 +4,9 @@
 	},
 	"actions": {
 		"save": "Save",
-		"createRow": "Create Row",
-		"cancelRow": "Cancel Row"
+		"addRow": "Add Row",
+		"saveRow": "Save Row",
+		"cancel": "Cancel"
 	},
 	"settings": {
 		"seatHeadline": "Seat Settings",

@@ -71,7 +71,7 @@ const initialStates = {
 			editor: { x: 10, y: 50, curve: 20 },
 			reversed: false,
 			beginWithSeatNumber: 1,
-			seats: createTestSeats('b-1', 40),
+			seats: createTestSeats('b-1', 32),
 		},
 	],
 

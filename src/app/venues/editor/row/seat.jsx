@@ -41,7 +41,7 @@ export function Seat({ index, number, id, type }) {
 				'empty' === type && css.emptySeat,
 			)}
 			style={{
-				'--seat-offset': `${curveOffset / 16}em`,
+				'--seat-offset': `${curveOffset / 16}rem`,
 			}}
 		>
 			<div className={css.number}>{number}</div>

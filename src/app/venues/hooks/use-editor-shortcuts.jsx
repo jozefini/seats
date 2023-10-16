@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { getBuilderStore } from '../store/useBuilderStore'
-import { useDictionary } from './dictionary'
+import { useDictionary } from './use-dictionary'
 
 export function useEditorShortcuts(ref) {
 	const { __ } = useDictionary()

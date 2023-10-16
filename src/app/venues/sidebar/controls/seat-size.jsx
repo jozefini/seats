@@ -1,4 +1,4 @@
-import { useDictionary } from '../../hooks/dictionary'
+import { useDictionary } from '../../hooks/use-dictionary'
 import { useBuilderStore } from '../../store/useBuilderStore'
 import { Field } from '../../ui/field'
 import { RangeSlider } from '../../ui/range-slider'

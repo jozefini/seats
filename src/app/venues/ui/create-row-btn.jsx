@@ -1,4 +1,4 @@
-import { useDictionary } from '../hooks/dictionary'
+import { useDictionary } from '../hooks/use-dictionary'
 import { getBuilderStore } from '../store/useBuilderStore'
 import { CURSOR_TYPES } from '../utils/contants'
 import { OutlineBtn } from './outline-btn'
@@ -34,7 +34,7 @@ export function CreateRowBtn() {
 				<path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
 			</svg>
 
-			<span>{__('actions.createRow')}</span>
+			<span>{__('actions.addRow')}</span>
 		</OutlineBtn>
 	)
 }
