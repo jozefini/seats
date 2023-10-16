@@ -1,13 +1,17 @@
 import { useEffect, useRef } from 'react'
-import { useBuilderStore } from '../store/useBuilderStore'
+import { getBuilderStore, useBuilderStore } from '../store/useBuilderStore'
 
-export function useSeatSelection({ rowId, seatId, isDisabled }) {
+export function useSeatEditorActions({ rowId, seatId, isDisabled }) {
 	const ref = useRef(null)
-	const { isSelected, select, unselect } = useBuilderStore((s) => ({
-		isSelected: s.selectedRows.includes(rowId),
-		select: s.select,
-		unselect: s.unselect,
-	}))
+
+	/**
+	 * Seat props.
+	 */
+	const isSelected = useBuilderStore((s) => s.selectedRows.includes(rowId))
+
+	/**
+	 * Selection.
+	 */
 	const inSelection = useBuilderStore((s) => {
 		if (!s.isSelecting) {
 			return s.selectedRows.includes(rowId)
@@ -33,15 +37,19 @@ export function useSeatSelection({ rowId, seatId, isDisabled }) {
 		)
 	})
 
+	/**
+	 * Selection.
+	 */
 	useEffect(() => {
 		if (isDisabled) return
 
+		const { select, unselect } = getBuilderStore()
 		if (inSelection) {
 			select(rowId, seatId)
 		} else {
 			unselect(rowId, seatId)
 		}
-	}, [inSelection, seatId, isDisabled])
+	}, [inSelection, seatId, isDisabled, getBuilderStore])
 
 	return {
 		ref,
