@@ -164,24 +164,61 @@ const builderStore = create(
 				draft.rows = JSON.parse(draft.history[draft.historyIndex].snapshot)
 			})
 		},
-		updateRow: (index, states) => {
+		updateSeat: (seatId, rowId, states) => {
+			// If the states are not an object, do nothing.
+			if (getType(states) !== 'object') {
+				return false
+			}
+
+			// Find the row index.
 			const { rows } = get()
-			const row = rows[index]
-			if (!row) {
+			const rowIndex = rows.findIndex((row) => row.id === rowId)
+			if (!rowIndex) {
+				return false
+			}
+
+			// Find the seat index.
+			const seatIndex = rows[rowIndex].seats.findIndex((seat) => seat.id === seatId)
+			if (!seatIndex) {
 				return false
 			}
 
 			set((draft) => {
-				// If the states are not an object, do nothing.
-				if (getType(states) !== 'object') {
-					return false
-				}
-
-				// Filter states that don't exist on row.
-				const filteredStates = Object.keys(states).filter((key) => hasOwnKey(row, key))
+				const seat = draft.rows[rowIndex].seats[seatIndex]
 
 				// Update the states.
-				filteredStates.forEach((key) => {
+				Object.keys(states).forEach((key) => {
+					if (!hasOwnKey(seat, key)) {
+						return false // We don't update the key if it doesn't exist.
+					}
+					seat[key] = states[key]
+				})
+
+				// Update the seat.
+				draft.rows[rowIndex].seats[seatIndex] = seat
+			})
+		},
+		updateRow: (rowId, states) => {
+			// If the states are not an object, do nothing.
+			if (getType(states) !== 'object') {
+				return false
+			}
+
+			const { rows } = get()
+			const rowIndex = rows.findIndex((row) => row.id === rowId)
+			if (!rowIndex) {
+				return false
+			}
+
+			set((draft) => {
+				// Get the row.
+				const row = draft.rows[rowIndex]
+
+				// Update the states.
+				Object.keys(states).forEach((key) => {
+					if (!hasOwnKey(row, key)) {
+						return false // We don't update the key if it doesn't exist.
+					}
 					row[key] = states[key]
 				})
 
@@ -189,32 +226,22 @@ const builderStore = create(
 				draft.rows[index] = row
 			})
 		},
-		updateRowById: (rowId, states) => {
-			const { rows, updateRow } = get()
-			const rowIndex = rows.findIndex((row) => row.id === rowId)
-			if (rowIndex === -1) {
+		updateStates: (states) => {
+			// If the states are not an object, do nothing.
+			if (getType(states) !== 'object') {
 				return false
 			}
 
-			updateRow(rowIndex, states)
-		},
-		updateStates: (states) =>
 			set((draft) => {
-				// If the states are not an object, do nothing.
-				if (getType(states) !== 'object') {
-					return false
-				}
-
 				// Filter all the states that are not in the initial states.
-				const filteredStates = Object.keys(states).filter((key) =>
-					initialStates.hasOwnProperty(key),
-				)
+				const filteredStates = Object.keys(states).filter((key) => hasOwnKey(initialStates, key))
 
 				// Update the states.
 				filteredStates.forEach((key) => {
 					draft[key] = states[key]
 				})
-			}),
+			})
+		},
 		resetStore: () => set({ ...initialStates }),
 	})),
 )
