@@ -10,6 +10,8 @@
 	},
 	"settings": {
 		"rowSettings": "Row Settings",
+		"rowId": "Row ID",
+		"rowLabel": "Row Label",
 		"rowCurve": "Row curve",
 
 		"generalSettings": "General settings",

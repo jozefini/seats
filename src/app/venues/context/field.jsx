@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react'
+import { getType } from '../utils/helpers'
 
 export const FieldContext = createContext({})
 
@@ -7,5 +8,7 @@ export const FieldProvider = ({ value, children }) => {
 }
 
 export function useFieldContext() {
-	return useContext(FieldContext)
+	const context = useContext(FieldContext)
+
+	return getType(context) === 'object' ? context : {}
 }

@@ -1,8 +1,8 @@
-import { useBuilderStore } from '../store/useBuilderStore'
-import { OutlineBtn } from './outline-btn'
+import { useVenueStore } from '../store/use-venue-store'
+import { OutlineBtn } from '../ui/buttons'
 
 export function RedoHistoryBtn() {
-	const { redoChanges, canRedo } = useBuilderStore((s) => ({
+	const { redoChanges, canRedo } = useVenueStore((s) => ({
 		redoChanges: s.redoChanges,
 		canRedo: s.historyIndex < s.history.length - 1,
 	}))

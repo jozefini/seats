@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react'
+import { getType } from '../utils/helpers'
 
 export const VenueContext = createContext({})
 
@@ -11,5 +12,7 @@ export const VenueProvider = (props) => {
 }
 
 export function useVenueContext() {
-	return useContext(VenueContext)
+	const context = useContext(VenueContext)
+
+	return getType(context) === 'object' ? context : {}
 }

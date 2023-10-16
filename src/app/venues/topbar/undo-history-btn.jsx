@@ -1,8 +1,8 @@
-import { useBuilderStore } from '../store/useBuilderStore'
-import { OutlineBtn } from './outline-btn'
+import { useVenueStore } from '../store/use-venue-store'
+import { OutlineBtn } from '../ui/buttons'
 
 export function UndoHistoryBtn() {
-	const { undoChanges, canUndo } = useBuilderStore((s) => ({
+	const { undoChanges, canUndo } = useVenueStore((s) => ({
 		undoChanges: s.undoChanges,
 		canUndo: s.historyIndex > 0,
 	}))

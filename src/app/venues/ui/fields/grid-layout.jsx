@@ -1,8 +1,8 @@
-import { useDictionary } from '../../hooks/use-dictionary'
-import { useBuilderStore } from '../../store/useBuilderStore'
 import { GRID_LAYOUT } from '../../utils/contants'
-import { RadioGroup, RadioChoice } from '../../ui/radio-group'
-import { Field } from '../../ui/field'
+import { useVenueStore } from '../../store/use-venue-store'
+import { useDictionary } from '../../hooks/use-dictionary'
+import { RadioGroup, RadioChoice } from '../controls'
+import { Field } from '../field'
 
 const css = {
 	icon: 'w-5 h-5',
@@ -10,7 +10,7 @@ const css = {
 
 export function GridLayout() {
 	const { __ } = useDictionary()
-	const { gridLayout, updateStates } = useBuilderStore((s) => ({
+	const { gridLayout, updateStates } = useVenueStore((s) => ({
 		gridLayout: s.gridLayout,
 		updateStates: s.updateStates,
 	}))

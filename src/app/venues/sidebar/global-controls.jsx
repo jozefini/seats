@@ -1,15 +1,12 @@
+import { MODES } from '../utils/contants'
+import { useVenueStore } from '../store/use-venue-store'
 import { useDictionary } from '../hooks/use-dictionary'
-import { useBuilderStore } from '../store/useBuilderStore'
 import { FieldGroup } from '../ui/field-group'
-import { CURSOR_TYPES } from '../utils/contants'
-import { SeatSize } from './controls/seat-size'
-import { SpaceBetweenSeats } from './controls/space-between-seats'
+import { SeatSize, SpaceBetweenSeats } from '../ui/fields'
 
 export function GlobalControls() {
 	const { __ } = useDictionary()
-	const showControls = useBuilderStore(
-		(s) => s.cursor === CURSOR_TYPES.DEFAULT && !s.selectedRows.length,
-	)
+	const showControls = useVenueStore((s) => s.mode === MODES.DEFAULT && !s.selectedRows.length)
 
 	if (!showControls) {
 		return null

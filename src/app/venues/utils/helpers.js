@@ -1,4 +1,4 @@
-import { getBuilderStore } from '../store/useBuilderStore'
+import { getVenueStore } from '../store/use-venue-store'
 
 /**
  * Join valid class names.
@@ -72,7 +72,7 @@ export function getCurveOffset(current, total, maxOffset = 20) {
  * @returns {object[]} - The new rows.
  */
 export function getUpdatedRowsCoords(x, y) {
-	const { rows, selectedRows } = getBuilderStore((s) => ({
+	const { rows, selectedRows } = getVenueStore((s) => ({
 		rows: s.rows,
 		selectedRows: s.selectedRows,
 	}))

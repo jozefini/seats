@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 import { useSeatEditorActions } from '../../hooks/use-seat-editor-actions'
-import { useBuilderStore } from '../../store/useBuilderStore'
-import { useRowContext } from '../../context/selection'
+import { useVenueStore } from '../../store/use-venue-store'
+import { useRowContext } from '../../context/row'
 import { classNames, getCurveOffset } from '../../utils/helpers'
-import { CURSOR_TYPES } from '../../utils/contants'
+import { MODES } from '../../utils/contants'
 
 const css = {
 	el: 'venue-seat border rounded-full inline-flex relative w-[var(--seat-size)] h-[var(--seat-size)] overflow-hidden mb-[var(--seat-offset)] select-none pointer-events-auto',
@@ -18,8 +18,8 @@ export function Seat({ index, number, id, type }) {
 	const { id: rowId, editor } = useRowContext()
 	const { curve } = editor
 	const { ref } = useSeatEditorActions({ rowId, seatId: id })
-	const { isDraggable, isSelected, totalSeats } = useBuilderStore((s) => ({
-		isDraggable: s.cursor === CURSOR_TYPES.DEFAULT || s.selectedRows.includes(rowId),
+	const { isDraggable, isSelected, totalSeats } = useVenueStore((s) => ({
+		isDraggable: s.mode === MODES.DEFAULT || s.selectedRows.includes(rowId),
 		isSelected: s.selectedRows.includes(rowId),
 		totalSeats: s.rows.find((row) => row.id === rowId).seats.length,
 	}))

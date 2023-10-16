@@ -1,14 +1,13 @@
+import { MODES } from '../utils/contants'
+import { useVenueStore } from '../store/use-venue-store'
 import { useDictionary } from '../hooks/use-dictionary'
-import { useBuilderStore } from '../store/useBuilderStore'
 import { FieldGroup } from '../ui/field-group'
-import { CURSOR_TYPES } from '../utils/contants'
-import { RowCurve } from './controls/row-curve'
+import { RowCurve } from '../ui/fields'
+import { RowId } from '../ui/fields/row-id'
 
 export function RowControls() {
 	const { __ } = useDictionary()
-	const showControls = useBuilderStore(
-		(s) => s.selectedRows.length || s.cursor === CURSOR_TYPES.ADD_ROW,
-	)
+	const showControls = useVenueStore((s) => s.selectedRows.length || s.mode === MODES.ADD_ROW)
 
 	if (!showControls) {
 		return null
@@ -17,6 +16,7 @@ export function RowControls() {
 	return (
 		<>
 			<FieldGroup title={__('settings.rowSettings')}>
+				<RowId />
 				<RowCurve />
 			</FieldGroup>
 		</>

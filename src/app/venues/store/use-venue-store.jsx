@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
-import { CURSOR_TYPES } from '../utils/contants'
+import { CURSORS, MODES } from '../utils/contants'
 import { getType, hasOwnKey } from '../utils/helpers'
 
 const createTestSeats = (rowId, seatsCount) => {
@@ -24,16 +24,13 @@ const createTestSeats = (rowId, seatsCount) => {
 
 const initialStates = {
 	// Editor.
-	cursor: CURSOR_TYPES.DEFAULT,
+	mode: MODES.DEFAULT,
+	cursor: CURSORS.DEFAULT,
 	isFocused: false,
 	editorY: 0,
 	editorX: 0,
 	editorWidth: 0,
 	editorHeight: 0,
-
-	// Seats.
-	seatSize: 20, // in pixels
-	spaceBetweenSeats: 2, // in pixels
 
 	// Tracking.
 	mouseY: 0,
@@ -51,7 +48,9 @@ const initialStates = {
 	// Dragging.
 	isDragging: false,
 
-	// Rows data.
+	// Rows & seats data.
+	seatSize: 20, // in pixels
+	spaceBetweenSeats: 2, // in pixels
 	newRowId: null,
 	rows: [
 		{
@@ -83,7 +82,7 @@ const initialStates = {
 	historyIndex: -1,
 }
 
-const builderStore = create(
+const venueStore = create(
 	immer((set, get) => ({
 		...initialStates,
 		select: (rowId, seatId) => {
@@ -219,7 +218,12 @@ const builderStore = create(
 					if (!hasOwnKey(row, key)) {
 						return false // We don't update the key if it doesn't exist.
 					}
-					row[key] = states[key]
+					const value = states[key]
+					if (getType(value) === 'object') {
+						row[key] = { ...row[key], ...value }
+					} else {
+						row[key] = states[key]
+					}
 				})
 
 				// Update the row.
@@ -246,8 +250,8 @@ const builderStore = create(
 	})),
 )
 
-export const getBuilderStore = (select) => {
-	const states = builderStore.getState()
+export const getVenueStore = (select) => {
+	const states = venueStore.getState()
 	return select ? select(states) : states
 }
-export const useBuilderStore = (select) => builderStore(select, shallow)
+export const useVenueStore = (select) => venueStore(select, shallow)

@@ -1,7 +1,7 @@
 import { useDictionary } from '../hooks/use-dictionary'
-import { CreateRowBtn } from '../ui/create-row-btn'
-import { RedoHistoryBtn } from '../ui/redo-history-btn'
-import { UndoHistoryBtn } from '../ui/undo-history-btn'
+import { CreateRowBtn } from './create-row-btn'
+import { RedoHistoryBtn } from './redo-history-btn'
+import { UndoHistoryBtn } from './undo-history-btn'
 
 const css = {
 	wrapper:

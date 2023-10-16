@@ -1,4 +1,4 @@
-import { useBuilderStore } from '../store/useBuilderStore'
+import { useVenueStore } from '../store/use-venue-store'
 import { createPortal } from 'react-dom'
 
 const css = {
@@ -6,7 +6,7 @@ const css = {
 }
 
 export function Selection() {
-	const { isSelecting, styles } = useBuilderStore((s) => {
+	const { isSelecting, styles } = useVenueStore((s) => {
 		if (!s.isSelecting) {
 			return { isSelecting: false }
 		}

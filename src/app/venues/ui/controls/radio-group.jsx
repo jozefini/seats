@@ -1,6 +1,6 @@
 import * as Radio from '@radix-ui/react-radio-group'
 import { useId } from 'react'
-import { classNames } from '../utils/helpers'
+import { classNames } from '../../utils/helpers'
 
 const css = {
 	wrapper: 'flex items-center justify-center rounded-lg bg-gray-100 p-0.5 text-gray-500',

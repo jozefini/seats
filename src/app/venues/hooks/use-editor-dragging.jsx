@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { getBuilderStore, useBuilderStore } from '../store/useBuilderStore'
+import { getVenueStore } from '../store/use-venue-store'
 import { getUpdatedRowsCoords } from '../utils/helpers'
-import { CURSOR_TYPES } from '../utils/contants'
+import { MODES } from '../utils/contants'
 
 export function useEditorDragging(ref) {
 	/**
@@ -9,7 +9,7 @@ export function useEditorDragging(ref) {
 	 */
 	useEffect(() => {
 		const node = ref.current
-		const { updateStates, addSnapshot } = getBuilderStore((s) => ({
+		const { updateStates, addSnapshot } = getVenueStore((s) => ({
 			updateStates: s.updateStates,
 			addSnapshot: s.addSnapshot,
 		}))
@@ -18,7 +18,7 @@ export function useEditorDragging(ref) {
 		let currentY = 0
 
 		const handleDragStart = (e) => {
-			const selectedRows = getBuilderStore((s) => {
+			const selectedRows = getVenueStore((s) => {
 				const isSeat = e.target.classList.contains('venue-seat')
 				const { rowId = null } = isSeat ? e.target.dataset : {}
 
@@ -26,12 +26,12 @@ export function useEditorDragging(ref) {
 					return [] // If the target is not a seat, do nothing.
 				}
 
-				switch (s.cursor) {
-					case CURSOR_TYPES.DEFAULT:
-						// If the cursor is default, drag the selected rows or the clicked row.
+				switch (s.mode) {
+					case MODES.DEFAULT:
+						// If the mode is default, drag the selected row.
 						return !s.selectedRows.includes(rowId) ? [rowId] : s.selectedRows
-					case CURSOR_TYPES.ADD_ROW:
-						// If the cursor is add row, drag the selected row.
+					case MODES.ADD_ROW:
+						// If the mode is add row, drag the selected row.
 						return s.selectedRows.includes(rowId) ? [rowId] : []
 					default:
 						return []
@@ -50,7 +50,7 @@ export function useEditorDragging(ref) {
 		}
 
 		const handleDragMove = (e) => {
-			const isDragging = getBuilderStore((s) => s.isDragging && s.selectedRows.length)
+			const isDragging = getVenueStore((s) => s.isDragging && s.selectedRows.length)
 			if (e.button !== 0 || !isDragging) {
 				return // Only on left click and if the target is a seat
 			}
@@ -67,7 +67,7 @@ export function useEditorDragging(ref) {
 		}
 
 		const handleDragEnd = (e) => {
-			const isDragging = getBuilderStore((s) => s.isDragging && s.selectedRows.length)
+			const isDragging = getVenueStore((s) => s.isDragging && s.selectedRows.length)
 			if (e.button !== 0 || !isDragging) {
 				return // Only on left click and if the target is a seat
 			}
@@ -99,7 +99,7 @@ export function useEditorDragging(ref) {
 				cancelAnimationFrame(animationFrameId)
 			}
 		}
-	}, [getBuilderStore])
+	}, [getVenueStore])
 
 	/**
 	 * Move rows by keyboard arrows
@@ -109,7 +109,7 @@ export function useEditorDragging(ref) {
 	useEffect(() => {
 		// Add on arrow keys, move 1px, if shift is pressed, move 10px.
 		const handleKeyDown = (e) => {
-			const { selectedRows, updateStates } = getBuilderStore((s) => ({
+			const { selectedRows, updateStates } = getVenueStore((s) => ({
 				selectedRows: s.selectedRows,
 				updateStates: s.updateStates,
 			}))
@@ -117,7 +117,7 @@ export function useEditorDragging(ref) {
 				!selectedRows.length ||
 				!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
 			) {
-				return // Only if the cursor is default and if the key is an arrow key.
+				return // Only on arrow keys
 			}
 
 			e.preventDefault()
@@ -138,5 +138,5 @@ export function useEditorDragging(ref) {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown)
 		}
-	}, [getBuilderStore, getUpdatedRowsCoords])
+	}, [getVenueStore, getUpdatedRowsCoords])
 }

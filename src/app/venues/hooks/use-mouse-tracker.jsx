@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { useBuilderStore } from '../store/useBuilderStore'
+import { useVenueStore } from '../store/use-venue-store'
 
 export function useMouseTracker(ref) {
-	const updateStates = useBuilderStore((s) => s.updateStates)
+	const updateStates = useVenueStore((s) => s.updateStates)
 
 	useEffect(() => {
 		const node = ref.current

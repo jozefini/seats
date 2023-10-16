@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { getBuilderStore } from '../store/useBuilderStore'
+import { getVenueStore } from '../store/use-venue-store'
 import { useDictionary } from './use-dictionary'
 
 export function useEditorShortcuts(ref) {
@@ -13,7 +13,7 @@ export function useEditorShortcuts(ref) {
 	useEffect(() => {
 		const node = ref.current
 		if (!node) return // If the node is not available, do nothing.
-		const updateStates = getBuilderStore((s) => s.updateStates)
+		const updateStates = getVenueStore((s) => s.updateStates)
 
 		const enableFocus = (e) => {
 			if (e.target === node || node.contains(e.target)) {
@@ -33,7 +33,7 @@ export function useEditorShortcuts(ref) {
 			window.removeEventListener('focusin', enableFocus)
 			window.removeEventListener('focusout', disableFocus)
 		}
-	}, [ref, getBuilderStore])
+	}, [ref, getVenueStore])
 
 	/**
 	 * Undo / Redo.
@@ -43,7 +43,7 @@ export function useEditorShortcuts(ref) {
 	 */
 	useEffect(() => {
 		const undoRedo = (e) => {
-			const { isFocused, undo, redo } = getBuilderStore((s) => ({
+			const { isFocused, undo, redo } = getVenueStore((s) => ({
 				isFocused: s.isFocused,
 				undo: s.undoChanges,
 				redo: s.redoChanges,
@@ -69,7 +69,7 @@ export function useEditorShortcuts(ref) {
 		return () => {
 			window.removeEventListener('keydown', undoRedo)
 		}
-	}, [ref, getBuilderStore])
+	}, [ref, getVenueStore])
 
 	/**
 	 * Delete selected rows
@@ -78,7 +78,7 @@ export function useEditorShortcuts(ref) {
 	 */
 	useEffect(() => {
 		const deleteRows = (e) => {
-			const { isFocused, selectedRows, updateStates } = getBuilderStore((s) => ({
+			const { isFocused, selectedRows, updateStates } = getVenueStore((s) => ({
 				isFocused: s.isFocused,
 				selectedRows: s.selectedRows,
 				updateStates: s.updateStates,
@@ -97,7 +97,7 @@ export function useEditorShortcuts(ref) {
 			}
 
 			// Delete all selected rows
-			const newRows = getBuilderStore().rows.filter((row) => !selectedRows.includes(row.id))
+			const newRows = getVenueStore().rows.filter((row) => !selectedRows.includes(row.id))
 			updateStates({ rows: newRows, selectedRows: [] })
 		}
 
@@ -105,7 +105,7 @@ export function useEditorShortcuts(ref) {
 		return () => {
 			window.removeEventListener('keydown', deleteRows)
 		}
-	}, [__, getBuilderStore])
+	}, [__, getVenueStore])
 
 	/**
 	 * Select all rows
@@ -114,7 +114,7 @@ export function useEditorShortcuts(ref) {
 	 */
 	useEffect(() => {
 		const selectAllRows = (e) => {
-			const { isFocused, rows, updateStates } = getBuilderStore((s) => ({
+			const { isFocused, rows, updateStates } = getVenueStore((s) => ({
 				isFocused: s.isFocused,
 				rows: s.rows,
 				updateStates: s.updateStates,
@@ -135,5 +135,5 @@ export function useEditorShortcuts(ref) {
 		return () => {
 			window.removeEventListener('keydown', selectAllRows)
 		}
-	}, [getBuilderStore])
+	}, [getVenueStore])
 }

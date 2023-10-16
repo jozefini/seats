@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { getBuilderStore, useBuilderStore } from '../store/useBuilderStore'
+import { getVenueStore, useVenueStore } from '../store/use-venue-store'
 
 export function useSeatEditorActions({ rowId, seatId, isDisabled }) {
 	const ref = useRef(null)
@@ -7,12 +7,12 @@ export function useSeatEditorActions({ rowId, seatId, isDisabled }) {
 	/**
 	 * Seat props.
 	 */
-	const isSelected = useBuilderStore((s) => s.selectedRows.includes(rowId))
+	const isSelected = useVenueStore((s) => s.selectedRows.includes(rowId))
 
 	/**
 	 * Selection.
 	 */
-	const inSelection = useBuilderStore((s) => {
+	const inSelection = useVenueStore((s) => {
 		if (!s.isSelecting) {
 			return s.selectedRows.includes(rowId)
 		}
@@ -43,13 +43,13 @@ export function useSeatEditorActions({ rowId, seatId, isDisabled }) {
 	useEffect(() => {
 		if (isDisabled) return
 
-		const { select, unselect } = getBuilderStore()
+		const { select, unselect } = getVenueStore()
 		if (inSelection) {
 			select(rowId, seatId)
 		} else {
 			unselect(rowId, seatId)
 		}
-	}, [inSelection, seatId, isDisabled, getBuilderStore])
+	}, [inSelection, seatId, isDisabled, getVenueStore])
 
 	return {
 		ref,

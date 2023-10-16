@@ -1,6 +1,6 @@
 import { useDictionary } from '../hooks/use-dictionary'
-import { useBuilderStore } from '../store/useBuilderStore'
-import { CURSOR_TYPES } from '../utils/contants'
+import { useVenueStore } from '../store/use-venue-store'
+import { MODES } from '../utils/contants'
 import { classNames } from '../utils/helpers'
 
 const css = {
@@ -11,17 +11,17 @@ const css = {
 }
 
 export function Actions() {
-	const { isAddRow, updateStates } = useBuilderStore((s) => ({
-		isAddRow: s.cursor === CURSOR_TYPES.ADD_ROW,
+	const { isAddRow, updateStates } = useVenueStore((s) => ({
+		isAddRow: s.mode === MODES.ADD_ROW,
 		updateStates: s.updateStates,
 	}))
 	const { __ } = useDictionary()
 
 	const handleCreate = () => {
-		updateStates({ cursor: CURSOR_TYPES.DEFAULT })
+		updateStates({ mode: MODES.DEFAULT })
 	}
 	const handleCancel = () => {
-		updateStates({ cursor: CURSOR_TYPES.DEFAULT })
+		updateStates({ mode: MODES.DEFAULT })
 	}
 
 	if (!isAddRow) {

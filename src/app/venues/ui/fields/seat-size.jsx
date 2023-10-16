@@ -1,11 +1,11 @@
+import { useVenueStore } from '../../store/use-venue-store'
 import { useDictionary } from '../../hooks/use-dictionary'
-import { useBuilderStore } from '../../store/useBuilderStore'
-import { Field } from '../../ui/field'
-import { RangeSlider } from '../../ui/range-slider'
+import { RangeSlider } from '../controls'
+import { Field } from '../field'
 
 export function SeatSize() {
 	const { __ } = useDictionary()
-	const { size, updateStates } = useBuilderStore((s) => ({
+	const { size, updateStates } = useVenueStore((s) => ({
 		size: s.seatSize,
 		updateStates: s.updateStates,
 	}))

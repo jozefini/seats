@@ -1,14 +1,14 @@
+import { MODES } from '../utils/contants'
+import { getVenueStore } from '../store/use-venue-store'
 import { useDictionary } from '../hooks/use-dictionary'
-import { getBuilderStore } from '../store/useBuilderStore'
-import { CURSOR_TYPES } from '../utils/contants'
-import { OutlineBtn } from './outline-btn'
+import { OutlineBtn } from '../ui/buttons'
 
 export function CreateRowBtn() {
 	const { __ } = useDictionary()
 
 	const handleCreateRow = () => {
-		const { isAddRow, updateStates, secondRow } = getBuilderStore((s) => ({
-			isAddRow: s.cursor === CURSOR_TYPES.ADD_ROW,
+		const { isAddRow, updateStates, secondRow } = getVenueStore((s) => ({
+			isAddRow: s.mode === MODES.ADD_ROW,
 			updateStates: s.updateStates,
 			secondRow: s.rows[1].id,
 		}))
@@ -17,7 +17,7 @@ export function CreateRowBtn() {
 		}
 
 		updateStates({
-			cursor: CURSOR_TYPES.ADD_ROW,
+			mode: MODES.ADD_ROW,
 			selectedRows: [secondRow],
 			selectedSeats: [],
 		})

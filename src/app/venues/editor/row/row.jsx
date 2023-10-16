@@ -1,7 +1,7 @@
-import { RowProvider } from '../../context/selection'
-import { useBuilderStore } from '../../store/useBuilderStore'
-import { CURSOR_TYPES } from '../../utils/contants'
+import { MODES } from '../../utils/contants'
 import { classNames } from '../../utils/helpers'
+import { RowProvider } from '../../context/row'
+import { useVenueStore } from '../../store/use-venue-store'
 import { Seat } from './seat'
 
 const css = {
@@ -18,11 +18,11 @@ const css = {
 export function Row(props) {
 	const { reversed, editor, seats, id, conflict } = props
 	const { x, y } = editor
-	const { seatSize, spaceBetweenSeats, isSelected, isNewRow } = useBuilderStore((s) => ({
+	const { seatSize, spaceBetweenSeats, isSelected, isNewRow } = useVenueStore((s) => ({
 		isSelected: s.selectedRows.includes(id),
 		seatSize: s.seatSize,
 		spaceBetweenSeats: s.spaceBetweenSeats,
-		isNewRow: s.cursor === CURSOR_TYPES.ADD_ROW,
+		isNewRow: s.mode === MODES.ADD_ROW,
 	}))
 
 	return (

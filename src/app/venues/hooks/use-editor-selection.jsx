@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { getBuilderStore } from '../store/useBuilderStore'
-import { CURSOR_TYPES } from '../utils/contants'
+import { getVenueStore } from '../store/use-venue-store'
+import { MODES } from '../utils/contants'
 
 export function useEditorSelection(ref) {
 	useEffect(() => {
@@ -8,7 +8,7 @@ export function useEditorSelection(ref) {
 		if (!node) return // If the node is not available, do nothing.
 
 		let animationFrameId
-		const updateStates = getBuilderStore((s) => s.updateStates)
+		const updateStates = getVenueStore((s) => s.updateStates)
 
 		// Set editor coordinates.
 		const editorRect = node.getBoundingClientRect()
@@ -20,8 +20,8 @@ export function useEditorSelection(ref) {
 		})
 
 		const handleMouseDown = (e) => {
-			if (e.button !== 0 || getBuilderStore((s) => s.cursor) !== CURSOR_TYPES.DEFAULT) {
-				return // Only on left click and if the cursor is default
+			if (e.button !== 0 || getVenueStore((s) => s.mode) !== MODES.DEFAULT) {
+				return // Only on left click and if the mode is default
 			}
 
 			let newStates = {
@@ -37,7 +37,7 @@ export function useEditorSelection(ref) {
 				const { rowId } = e.target.dataset
 
 				newStates.isSelecting = false
-				newStates.selectedRows = getBuilderStore((s) =>
+				newStates.selectedRows = getVenueStore((s) =>
 					!s.selectedRows.includes(rowId) ? [rowId] : s.selectedRows,
 				)
 			}
@@ -46,8 +46,8 @@ export function useEditorSelection(ref) {
 		}
 
 		const handleMouseMove = (e) => {
-			if (e.button !== 0 || getBuilderStore((s) => s.cursor) !== CURSOR_TYPES.DEFAULT) {
-				return // Only on left click and if the cursor is default
+			if (e.button !== 0 || getVenueStore((s) => s.mode) !== MODES.DEFAULT) {
+				return // Only on left click and if the mode is default
 			}
 
 			animationFrameId = requestAnimationFrame(() => {
@@ -56,8 +56,8 @@ export function useEditorSelection(ref) {
 		}
 
 		const handleMouseUp = (e) => {
-			if (e.button !== 0 || getBuilderStore((s) => s.cursor) !== CURSOR_TYPES.DEFAULT) {
-				return // Only on left click and if the cursor is default
+			if (e.button !== 0 || getVenueStore((s) => s.mode) !== MODES.DEFAULT) {
+				return // Only on left click and if the mode is default
 			}
 
 			updateStates({ isSelecting: false })
@@ -85,5 +85,5 @@ export function useEditorSelection(ref) {
 				cancelAnimationFrame(animationFrameId)
 			}
 		}
-	}, [ref, getBuilderStore])
+	}, [ref, getVenueStore])
 }

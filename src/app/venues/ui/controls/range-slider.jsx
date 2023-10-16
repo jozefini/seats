@@ -1,6 +1,6 @@
 import * as Slider from '@radix-ui/react-slider'
-import { useFieldContext } from '../context/field'
-import { classNames } from '../utils/helpers'
+import { useFieldContext } from '../../context/field'
+import { classNames } from '../../utils/helpers'
 
 const css = {
 	wrapper: 'flex w-full items-center gap-x-2 relative',
