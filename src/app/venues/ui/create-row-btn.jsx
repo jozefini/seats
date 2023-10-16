@@ -7,9 +7,10 @@ export function CreateRowBtn() {
 	const { __ } = useDictionary()
 
 	const handleCreateRow = () => {
-		const { isAddRow, updateStates } = getBuilderStore((s) => ({
+		const { isAddRow, updateStates, secondRow } = getBuilderStore((s) => ({
 			isAddRow: s.cursor === CURSOR_TYPES.ADD_ROW,
 			updateStates: s.updateStates,
+			secondRow: s.rows[1].id,
 		}))
 		if (isAddRow) {
 			return
@@ -17,7 +18,7 @@ export function CreateRowBtn() {
 
 		updateStates({
 			cursor: CURSOR_TYPES.ADD_ROW,
-			selectedRows: [],
+			selectedRows: [secondRow],
 			selectedSeats: [],
 		})
 	}

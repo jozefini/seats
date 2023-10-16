@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
 import { CURSOR_TYPES } from '../utils/contants'
-import { getType } from '../utils/helpers'
+import { getType, hasOwnKey } from '../utils/helpers'
 
 const createTestSeats = (rowId, seatsCount) => {
 	let seats = []
@@ -52,6 +52,7 @@ const initialStates = {
 	isDragging: false,
 
 	// Rows data.
+	newRowId: null,
 	rows: [
 		{
 			id: 'a-1',
@@ -60,6 +61,7 @@ const initialStates = {
 			defaultPrice: 0,
 			editor: { x: 10, y: 10, curve: 0 },
 			reversed: false,
+			conflict: true,
 			beginWithSeatNumber: 1,
 			seats: createTestSeats('a-1', 40),
 		},
@@ -70,6 +72,7 @@ const initialStates = {
 			defaultPrice: 0,
 			editor: { x: 10, y: 50, curve: 20 },
 			reversed: false,
+			conflict: false,
 			beginWithSeatNumber: 1,
 			seats: createTestSeats('b-1', 32),
 		},
@@ -160,6 +163,40 @@ const builderStore = create(
 				// We update the rows.
 				draft.rows = JSON.parse(draft.history[draft.historyIndex].snapshot)
 			})
+		},
+		updateRow: (index, states) => {
+			const { rows } = get()
+			const row = rows[index]
+			if (!row) {
+				return false
+			}
+
+			set((draft) => {
+				// If the states are not an object, do nothing.
+				if (getType(states) !== 'object') {
+					return false
+				}
+
+				// Filter states that don't exist on row.
+				const filteredStates = Object.keys(states).filter((key) => hasOwnKey(row, key))
+
+				// Update the states.
+				filteredStates.forEach((key) => {
+					row[key] = states[key]
+				})
+
+				// Update the row.
+				draft.rows[index] = row
+			})
+		},
+		updateRowById: (rowId, states) => {
+			const { rows, updateRow } = get()
+			const rowIndex = rows.findIndex((row) => row.id === rowId)
+			if (rowIndex === -1) {
+				return false
+			}
+
+			updateRow(rowIndex, states)
 		},
 		updateStates: (states) =>
 			set((draft) => {

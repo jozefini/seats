@@ -18,19 +18,29 @@ export function useEditorDragging(ref) {
 		let currentY = 0
 
 		const handleDragStart = (e) => {
-			const isDefaultCursor = getBuilderStore((s) => s.cursor) === CURSOR_TYPES.DEFAULT
-			const isSelectingASeat = e.target.classList.contains('venue-seat')
-			if (e.button !== 0 || !isSelectingASeat || !isDefaultCursor) {
+			const selectedRows = getBuilderStore((s) => {
+				const isSeat = e.target.classList.contains('venue-seat')
+				const { rowId = null } = isSeat ? e.target.dataset : {}
+
+				if (!rowId) {
+					return [] // If the target is not a seat, do nothing.
+				}
+
+				switch (s.cursor) {
+					case CURSOR_TYPES.DEFAULT:
+						// If the cursor is default, drag the selected rows or the clicked row.
+						return !s.selectedRows.includes(rowId) ? [rowId] : s.selectedRows
+					case CURSOR_TYPES.ADD_ROW:
+						// If the cursor is add row, drag the selected row.
+						return s.selectedRows.includes(rowId) ? [rowId] : []
+					default:
+						return []
+				}
+			})
+
+			if (e.button !== 0 || !selectedRows.length) {
 				return // Only on left click and if the target is a seat
 			}
-
-			// Get the row ID
-			const { rowId } = e.target.dataset
-			// Get row or rows to drag
-			// If there are other rows selected, drag them all
-			const selectedRows = getBuilderStore((s) =>
-				!s.selectedRows.includes(rowId) ? [rowId] : s.selectedRows,
-			)
 
 			// Set the start mouse position
 			currentX = e.clientX
@@ -40,11 +50,8 @@ export function useEditorDragging(ref) {
 		}
 
 		const handleDragMove = (e) => {
-			const { isDragging, isDefaultCursor } = getBuilderStore((s) => ({
-				isDragging: s.isDragging,
-				isDefaultCursor: s.cursor === CURSOR_TYPES.DEFAULT,
-			}))
-			if (e.button !== 0 || !isDragging || !isDefaultCursor) {
+			const isDragging = getBuilderStore((s) => s.isDragging && s.selectedRows.length)
+			if (e.button !== 0 || !isDragging) {
 				return // Only on left click and if the target is a seat
 			}
 
@@ -60,11 +67,8 @@ export function useEditorDragging(ref) {
 		}
 
 		const handleDragEnd = (e) => {
-			const { isDragging, isDefaultCursor } = getBuilderStore((s) => ({
-				isDragging: s.isDragging,
-				isDefaultCursor: s.cursor === CURSOR_TYPES.DEFAULT,
-			}))
-			if (e.button !== 0 || !isDragging || !isDefaultCursor) {
+			const isDragging = getBuilderStore((s) => s.isDragging && s.selectedRows.length)
+			if (e.button !== 0 || !isDragging) {
 				return // Only on left click and if the target is a seat
 			}
 
@@ -105,20 +109,15 @@ export function useEditorDragging(ref) {
 	useEffect(() => {
 		// Add on arrow keys, move 1px, if shift is pressed, move 10px.
 		const handleKeyDown = (e) => {
-			if (
-				!getBuilderStore((s) => s.cursor === CURSOR_TYPES.DEFAULT) ||
-				!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
-			) {
-				return // Only if the cursor is default and if the key is an arrow key.
-			}
-
 			const { selectedRows, updateStates } = getBuilderStore((s) => ({
-				rows: s.rows,
 				selectedRows: s.selectedRows,
 				updateStates: s.updateStates,
 			}))
-			if (!selectedRows.length) {
-				return // If no row is selected, do nothing.
+			if (
+				!selectedRows.length ||
+				!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
+			) {
+				return // Only if the cursor is default and if the key is an arrow key.
 			}
 
 			e.preventDefault()

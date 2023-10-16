@@ -1,6 +1,7 @@
 import { useDictionary } from '../hooks/use-dictionary'
 import { Actions } from './actions'
 import { GlobalControls } from './global-controls'
+import { RowControls } from './row-controls'
 
 const css = {
 	wrapper: 'h-full w-full pr-8 py-6',
@@ -14,6 +15,7 @@ export function Sidebar() {
 		<div className={css.wrapper}>
 			<div className={css.inner}>
 				<GlobalControls />
+				<RowControls />
 				<Actions />
 			</div>
 		</div>

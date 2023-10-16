@@ -9,14 +9,18 @@
 		"cancel": "Cancel"
 	},
 	"settings": {
+		"rowSettings": "Row Settings",
+		"rowCurve": "Row curve",
+
+		"generalSettings": "General settings",
+		"seatSize": "Seat size",
+		"spaceBetweenSeats": "Space between seats",
+
 		"seatHeadline": "Seat Settings",
-		"seatSize": "Size",
-		"spaceBetweenSeats": "Space between",
 		"gridHeadline": "Guide Lines Settings",
 		"gridLayout": "Mode",
 		"gridSize": "Size",
 		"gridOpacity": "Opacity",
-		"rowCurve": "Row Curve",
 		"rowCurveDiffValues": "Selected rows have different curve values"
 	},
 	"prompt": {

@@ -19,7 +19,7 @@ export function Seat({ index, number, id, type }) {
 	const { curve } = editor
 	const { ref } = useSeatSelection({ rowId, seatId: id })
 	const { isDraggable, isSelected, totalSeats } = useBuilderStore((s) => ({
-		isDraggable: s.cursor === CURSOR_TYPES.DEFAULT,
+		isDraggable: s.cursor === CURSOR_TYPES.DEFAULT || s.selectedRows.includes(rowId),
 		isSelected: s.selectedRows.includes(rowId),
 		totalSeats: s.rows.find((row) => row.id === rowId).seats.length,
 	}))
