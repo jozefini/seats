@@ -9,7 +9,7 @@ export function RowCurve() {
 	const { id: rowId } = useRowContext()
 	const { isSelected, curveSize, updateRow } = useVenueStore((s) => ({
 		isSelected: rowId && s.selectedRows.includes(rowId),
-		curveSize: rowId ? s.rows.find((row) => row.id === rowId).editor.curve : 0,
+		curveSize: rowId ? s.rows.find((row) => row.id === rowId)?.editor?.curve ?? 0 : 0,
 		updateRow: s.updateRow,
 	}))
 

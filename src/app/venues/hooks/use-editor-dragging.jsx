@@ -109,11 +109,13 @@ export function useEditorDragging(ref) {
 	useEffect(() => {
 		// Add on arrow keys, move 1px, if shift is pressed, move 10px.
 		const handleKeyDown = (e) => {
-			const { selectedRows, updateStates } = getVenueStore((s) => ({
+			const { isFocused, selectedRows, updateStates } = getVenueStore((s) => ({
+				isFocused: s.isFocused,
 				selectedRows: s.selectedRows,
 				updateStates: s.updateStates,
 			}))
 			if (
+				!isFocused ||
 				!selectedRows.length ||
 				!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
 			) {

@@ -142,11 +142,12 @@ export function createRow(x = 0, y = 0, seats = 10) {
 
 	// Create seats.
 	for (let i = 0; i < seats; i++) {
+		const number = i + 1
 		row.seats.push({
-			id: `${id}-${beginWithSeatNumber + i}`,
+			id: `${id}-${number}`,
 			reserved: false,
-			number: i + 1,
 			type: 'default',
+			number,
 		})
 	}
 

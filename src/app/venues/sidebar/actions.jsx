@@ -11,9 +11,10 @@ const css = {
 }
 
 export function Actions() {
-	const { isAddRow, selectedRow, updateStates } = useVenueStore((s) => ({
+	const { isAddRow, selectedRow, deleteRow, updateStates } = useVenueStore((s) => ({
 		selectedRow: s.selectedRows.length === 1 ? s.selectedRows[0] : null,
 		isAddRow: s.mode === MODES.ADD_ROW,
+		deleteRow: s.deleteRow,
 		updateStates: s.updateStates,
 	}))
 	const { __ } = useDictionary()
@@ -22,6 +23,7 @@ export function Actions() {
 		updateStates({ mode: MODES.DEFAULT })
 	}
 	const handleCancel = () => {
+		deleteRow(selectedRow)
 		updateStates({ mode: MODES.DEFAULT })
 	}
 

@@ -226,9 +226,22 @@ const venueStore = create(
 						row[key] = states[key]
 					}
 				})
+			})
+		},
+		deleteRow: (rowId) => {
+			const { rows } = get()
+			const rowIndex = rows.findIndex((row) => row.id === rowId)
+			if (!rowIndex) {
+				return false
+			}
 
-				// Update the row.
-				draft.rows[index] = row
+			set((draft) => {
+				// Delete the row.
+				draft.rows.splice(rowIndex, 1)
+				// If selected row is the deleted row, unselect it.
+				if (draft.selectedRows.includes(rowId)) {
+					draft.selectedRows = draft.selectedRows.filter((selectedRowId) => selectedRowId !== rowId)
+				}
 			})
 		},
 		updateStates: (states) => {
