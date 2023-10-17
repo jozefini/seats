@@ -24,6 +24,7 @@ const createTestSeats = (rowId, seatsCount) => {
 
 const initialStates = {
 	// Editor.
+	title: '',
 	mode: MODES.DEFAULT,
 	cursor: CURSORS.DEFAULT,
 	isFocused: false,

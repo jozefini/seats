@@ -1,6 +1,5 @@
 const css = {
-	wrapper:
-		'grid grid-cols-[1fr_15.625rem] rtl:grid-cols-[15.625rem_1fr] gap-x-8 border-t min-h-[50rem]',
+	wrapper: 'grid grid-cols-[1fr_15.625rem] gap-x-8 border-t min-h-[50rem] py-6 px-8',
 }
 
 export function EditorWrapper({ children }) {

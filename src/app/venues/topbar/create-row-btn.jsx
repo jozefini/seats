@@ -1,20 +1,19 @@
 import { MODES } from '../utils/contants'
-import { getVenueStore } from '../store/use-venue-store'
+import { useVenueStore } from '../store/use-venue-store'
 import { useDictionary } from '../hooks/use-dictionary'
 import { OutlineBtn } from '../ui/buttons'
 
 export function CreateRowBtn() {
 	const { __ } = useDictionary()
+	const { isAddRow, updateStates } = useVenueStore((s) => ({
+		isAddRow: s.mode === MODES.ADD_ROW,
+		updateStates: s.updateStates,
+	}))
 
 	const handleCreateRow = () => {
-		const { isAddRow, updateStates } = getVenueStore((s) => ({
-			isAddRow: s.mode === MODES.ADD_ROW,
-			updateStates: s.updateStates,
-		}))
 		if (isAddRow) {
 			return
 		}
-
 		updateStates({
 			mode: MODES.ADD_ROW,
 			selectedRows: [],
@@ -23,7 +22,7 @@ export function CreateRowBtn() {
 	}
 
 	return (
-		<OutlineBtn onClick={handleCreateRow}>
+		<OutlineBtn onClick={handleCreateRow} isDisabled={isAddRow}>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				fill='none'

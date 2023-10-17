@@ -10,7 +10,7 @@ import { classNames } from '../utils/helpers'
 import { MODES } from '../utils/contants'
 
 const css = {
-	wrapper: 'h-full w-full pl-8 py-6 max-w-full overflow-auto md:rtl:order-1',
+	wrapper: 'h-full w-full max-w-full overflow-auto',
 	editor: 'relative h-full w-full overflow-hidden bg-white border rounded-md',
 	box: 'relative h-full w-full block text-2xl text-black rounded-[inherit] outline-none overflow-auto',
 	selectArea: 'cursor-crosshair !border-orange-800/30',

@@ -1,0 +1,33 @@
+{
+	"topbar": {
+		"headline": "בניית מקום"
+	},
+	"actions": {
+		"save": "שמור",
+		"addRow": "הוסף שורה",
+		"saveRow": "שמור שורה",
+		"cancel": "ביטול"
+	},
+	"settings": {
+		"rowSettings": "הגדרות שורה",
+		"rowId": "מזהה שורה",
+		"rowLabel": "תווית שורה",
+		"rowCurve": "עקומת שורה",
+		"rowCoordsNotice": "לחץ על העורך כדי לבחור את הקואורדינטות של השורה הראשונית",
+		"rowCoordsTip": "תוכל לשנות את הקואורדינטות של השורה על ידי גרירת השורה",
+
+		"generalSettings": "הגדרות כלליות",
+		"seatSize": "גודל מושב",
+		"spaceBetweenSeats": "רווח בין מושבים",
+
+		"seatHeadline": "הגדרות מושב",
+		"gridHeadline": "הגדרות קווי מנחה",
+		"gridLayout": "מצב",
+		"gridSize": "גודל",
+		"gridOpacity": "אטימות",
+		"rowCurveDiffValues": "לשורות שנבחרו יש ערכי עקומה שונים"
+	},
+	"prompt": {
+		"deleteRows": "האם אתה בטוח שברצונך למחוק את השורות שנבחרו?"
+	}
+}

@@ -4,7 +4,7 @@ import { GlobalControls } from './global-controls'
 import { RowControls } from './row-controls'
 
 const css = {
-	wrapper: 'h-full w-full pr-8 py-6',
+	wrapper: 'h-full w-full',
 	inner: 'h-full w-full relative overflow-y-auto flex flex-col gap-y-8',
 }
 
