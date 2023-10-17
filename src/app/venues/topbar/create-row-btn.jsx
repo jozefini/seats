@@ -7,10 +7,9 @@ export function CreateRowBtn() {
 	const { __ } = useDictionary()
 
 	const handleCreateRow = () => {
-		const { isAddRow, updateStates, secondRow } = getVenueStore((s) => ({
+		const { isAddRow, updateStates } = getVenueStore((s) => ({
 			isAddRow: s.mode === MODES.ADD_ROW,
 			updateStates: s.updateStates,
-			secondRow: s.rows[1].id,
 		}))
 		if (isAddRow) {
 			return
@@ -18,7 +17,7 @@ export function CreateRowBtn() {
 
 		updateStates({
 			mode: MODES.ADD_ROW,
-			selectedRows: [secondRow],
+			selectedRows: [],
 			selectedSeats: [],
 		})
 	}

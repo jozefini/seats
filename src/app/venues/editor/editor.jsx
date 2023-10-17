@@ -17,9 +17,10 @@ const css = {
 
 export function Editor() {
 	const ref = useRef()
-	const { rows, mode } = useVenueStore((s) => ({
+	const { rows, mode, selectedLength } = useVenueStore((s) => ({
 		rows: s.rows,
 		mode: s.mode,
+		selectedLength: s.selectedRows.length,
 	}))
 
 	useMouseTracker(ref)
@@ -38,7 +39,12 @@ export function Editor() {
 
 	return (
 		<div className={css.wrapper}>
-			<div className={classNames(css.editor, mode === MODES.ADD_ROW && 'cursor-crosshair')}>
+			<div
+				className={classNames(
+					css.editor,
+					mode === MODES.ADD_ROW && selectedLength === 0 && 'cursor-crosshair',
+				)}
+			>
 				<div className={css.box} ref={ref} tabIndex={0}>
 					{rows.map((row) => (
 						<Row key={row.id} {...row} />
