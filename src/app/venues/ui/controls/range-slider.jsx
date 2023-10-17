@@ -16,7 +16,7 @@ const css = {
 }
 
 export function RangeSlider({ className, min, max, step, value, defaultValue, onChange }) {
-	const { label } = useFieldContext()
+	const { label, inputId } = useFieldContext()
 
 	const onInputChange = (e) => {
 		const newValue = Math.min(Math.max(e.target.value, min), max)
@@ -45,7 +45,13 @@ export function RangeSlider({ className, min, max, step, value, defaultValue, on
 				<Slider.Thumb className={css.thumb} aria-label={label} />
 			</Slider.Root>
 			<div className={css.inputBox}>
-				<input type='number' className={css.input} value={_value} onChange={onInputChange} />
+				<input
+					id={inputId}
+					type='number'
+					className={css.input}
+					value={_value}
+					onChange={onInputChange}
+				/>
 			</div>
 		</div>
 	)

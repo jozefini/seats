@@ -45,6 +45,9 @@ export function Editor() {
 					css.editor,
 					mode === MODES.ADD_ROW && selectedLength === 0 && css.selectArea,
 				)}
+				style={{
+					direction: 'ltr', // Don't be affected by the direction of the parent
+				}}
 			>
 				<div className={css.box} ref={ref} tabIndex={0}>
 					{rows.map((row) => (
