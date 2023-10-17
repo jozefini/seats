@@ -13,6 +13,8 @@
 		"rowId": "Row ID",
 		"rowLabel": "Row Label",
 		"rowCurve": "Row curve",
+		"rowCoordsNotice": "Click on the editor to choose the initial row's coordinates",
+		"rowCoordsTip": "You can change the row's coordinates by dragging the row",
 
 		"generalSettings": "General settings",
 		"seatSize": "Seat size",

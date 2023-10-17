@@ -6,11 +6,11 @@ const css = {
 	btnDefault: 'text-black/70 hover:text-black bg-white',
 }
 
-export function OutlineBtn({ isDisabled, children, ...props }) {
+export function OutlineBtn({ isDisabled, className, children, ...props }) {
 	return (
 		<button
 			type='button'
-			className={classNames(css.btn, isDisabled ? css.btnDisabled : css.btnDefault)}
+			className={classNames(css.btn, className, isDisabled ? css.btnDisabled : css.btnDefault)}
 			disabled={isDisabled}
 			{...props}
 		>

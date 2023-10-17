@@ -5,10 +5,7 @@ import { FieldGroup } from '../ui/field-group'
 import { RowCurve } from '../ui/fields'
 import { RowId } from '../ui/fields/row-id'
 import { RowProvider } from '../context/row'
-
-const css = {
-	notice: 'p-4 bg-orange-500/5 rounded-md text-orange-600',
-}
+import { RowCoordinates } from './row-coordinates'
 
 export function RowControls() {
 	const { __ } = useDictionary()
@@ -23,9 +20,7 @@ export function RowControls() {
 
 	return (
 		<RowProvider id={selectedRow}>
-			{isAddRow && (
-				<div className={css.notice}>Please select a position on the map to add a row.</div>
-			)}
+			{isAddRow && <RowCoordinates />}
 			{!isAddRow && (
 				<>
 					<FieldGroup title={__('settings.rowSettings')}>

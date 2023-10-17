@@ -60,7 +60,7 @@ const initialStates = {
 			defaultPrice: 0,
 			editor: { x: 10, y: 10, curve: 0 },
 			reversed: false,
-			conflict: true,
+			conflict: false,
 			beginWithSeatNumber: 1,
 			seats: createTestSeats('a-1', 40),
 		},

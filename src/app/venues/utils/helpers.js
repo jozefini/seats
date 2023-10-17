@@ -118,6 +118,42 @@ export function getUpdatedRowsCoords(x, y) {
 }
 
 /**
+ * Create a new row.
+ *
+ * @param {number} x - The x position.
+ * @param {number} y - The y position.
+ * @param {number} seats - The number of seats.
+ * @returns {object} - The new row.
+ */
+export function createRow(x = 0, y = 0, seats = 10) {
+	// Create row.
+	const id = new Date().getTime().toString()
+	const row = {
+		id,
+		label: '',
+		price: 0,
+		defaultPrice: 0,
+		editor: { x, y, curve: 0 },
+		reversed: false,
+		conflict: false,
+		beginWithSeatNumber: 1,
+		seats: [],
+	}
+
+	// Create seats.
+	for (let i = 0; i < seats; i++) {
+		row.seats.push({
+			id: `${id}-${beginWithSeatNumber + i}`,
+			reserved: false,
+			number: i + 1,
+			type: 'default',
+		})
+	}
+
+	return row
+}
+
+/**
  * Get nested property from object.
  *
  * @param {object} obj - The object to access.

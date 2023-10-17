@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import { getType } from '../utils/helpers'
 
 export const RowContext = createContext({})
